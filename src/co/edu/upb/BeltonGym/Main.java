@@ -71,7 +71,7 @@ public class Main {
 
 		
 		//statsManager.menuDisplayBusinessData(users, plans);
-		menuPlans(plans);
+		//menuPlans(plans);
 		//banUsers(users,routeUserJson);
 		
 		//addPlan(plans,routePlanJson);
