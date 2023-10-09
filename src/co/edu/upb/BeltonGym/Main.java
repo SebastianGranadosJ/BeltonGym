@@ -27,8 +27,8 @@ public class Main {
 		statsManager = readJsonBusinessStatistics(routeStatsJson);
 		
 		 Scanner in = new Scanner(System.in);
-         int choice,otro;
-         otro=1;
+         int choice;
+         int other = 1;
 		
 		/*
 	
@@ -80,7 +80,7 @@ public class Main {
 		//addPlan(plans,routePlanJson);
         //menuUsers(users);
 		
-            while(otro==1){
+            while(other==1){
             	
                 System.out.println("1. Menú de Usaurios");
                 System.out.println("2. Estadísticas del Negocio");
@@ -125,11 +125,24 @@ public class Main {
                     	notifyUsertDue(users);
                     	System.out.println("--------------------------------------------");
                         break;
+                    case 10:
+	                    System.out.println("Programa cerrado");
+	                    other = 0;
+	                    break;
                     default:
                     	System.out.println("Ingrese un valor valido");
                 }
+                System.out.println();
+                System.out.println("Presione enter para continuar");
+                in.nextLine();
+                for(int ii = 0; ii <30; ii++) {
+                	 System.out.println();
+                }
             }
-            in.close();
+            if(other != 0) {
+            	in.close();	
+            }
+            
         }// MAIN
 	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {

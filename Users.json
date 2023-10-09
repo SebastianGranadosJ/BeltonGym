@@ -21,8 +21,8 @@
 		],
 		"dueDatePlan": [
 			2023,
-			9,
-			27
+			10,
+			7
 		],
 		"banned": false
 	},
@@ -32,24 +32,24 @@
 		"gender": "m",
 		"id": "10231921",
 		"currentPlan": {
-			"plan": "2 Semanas",
-			"value": 35000.0,
-			"description": "Plan de 2 semanas",
-			"durationDay": 14,
+			"plan": "1 Dia",
+			"value": 8000.0,
+			"description": "Plan diario",
+			"durationDay": 1,
 			"durationMonth": 0,
 			"durationYear": 0,
-			"totalTimesAdquired": 0
+			"totalTimesAdquired": 4
 		},
-		"statusPlan": false,
+		"statusPlan": true,
 		"dateLastPayment": [
-			2002,
-			3,
-			2
+			2023,
+			10,
+			9
 		],
 		"dueDatePlan": [
-			2002,
-			3,
-			16
+			2023,
+			10,
+			10
 		],
 		"banned": false
 	},
@@ -106,86 +106,6 @@
 			27
 		],
 		"banned": false
-	},
-	{
-		"name": "S",
-		"age": 1,
-		"gender": "m",
-		"id": "1",
-		"currentPlan": {
-			"plan": "1 Año",
-			"value": 660000.0,
-			"description": "Plan anual",
-			"durationDay": 0,
-			"durationMonth": 0,
-			"durationYear": 1,
-			"totalTimesAdquired": 1
-		},
-		"statusPlan": true,
-		"dateLastPayment": [
-			2023,
-			9,
-			26
-		],
-		"dueDatePlan": [
-			2024,
-			9,
-			26
-		],
-		"banned": false
-	},
-	{
-		"name": "Manu",
-		"age": 1,
-		"gender": "m",
-		"id": "1",
-		"currentPlan": {
-			"plan": "1 Año",
-			"value": 660000.0,
-			"description": "Plan anual",
-			"durationDay": 0,
-			"durationMonth": 0,
-			"durationYear": 1,
-			"totalTimesAdquired": 1
-		},
-		"statusPlan": true,
-		"dateLastPayment": [
-			2023,
-			9,
-			26
-		],
-		"dueDatePlan": [
-			2024,
-			9,
-			26
-		],
-		"banned": false
-	},
-	{
-		"name": "m",
-		"age": 1,
-		"gender": "m",
-		"id": "1",
-		"currentPlan": {
-			"plan": "1 Dia",
-			"value": 8000.0,
-			"description": "Plan diario",
-			"durationDay": 1,
-			"durationMonth": 0,
-			"durationYear": 0,
-			"totalTimesAdquired": 2
-		},
-		"statusPlan": true,
-		"dateLastPayment": [
-			2023,
-			9,
-			27
-		],
-		"dueDatePlan": [
-			2023,
-			9,
-			28
-		],
-		"banned": false
 	}
+	
 ]

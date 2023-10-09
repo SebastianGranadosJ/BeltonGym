@@ -1,10 +1,21 @@
 [
+	
 	{
-		"plan": "1 Mes",
-		"value": 60000.0,
-		"description": "Plan mensual",
-		"durationDay": 0,
-		"durationMonth": 1,
+		"plan": "1 Dia",
+		"value": 8000.0,
+		"description": "Plan diario",
+		"durationDay": 1,
+		"durationMonth": 0,
+		"durationYear": 0,
+		"totalTimesAdquired": 4
+	},
+
+	{
+		"plan": "1 Semana",
+		"value": 20000.0,
+		"description": "Plan de 1 semana",
+		"durationDay": 7,
+		"durationMonth": 0,
 		"durationYear": 0,
 		"totalTimesAdquired": 0
 	},
@@ -18,23 +29,16 @@
 		"totalTimesAdquired": 0
 	},
 	{
-		"plan": "1 Semana",
-		"value": 20000.0,
-		"description": "Plan de 1 semana",
-		"durationDay": 7,
-		"durationMonth": 0,
+		"plan": "1 Mes",
+		"value": 60000.0,
+		"description": "Plan mensual",
+		"durationDay": 0,
+		"durationMonth": 1,
 		"durationYear": 0,
 		"totalTimesAdquired": 0
 	},
-	{
-		"plan": "1 Dia",
-		"value": 8000.0,
-		"description": "Plan diario",
-		"durationDay": 1,
-		"durationMonth": 0,
-		"durationYear": 0,
-		"totalTimesAdquired": 2
-	},
+
+
 	{
 		"plan": "1 Año",
 		"value": 660000.0,
