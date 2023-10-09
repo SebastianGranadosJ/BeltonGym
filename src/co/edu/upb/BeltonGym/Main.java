@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		String routeUserJson = "Users.json";
 		String routePlanJson = "Plans.json";
 		String routeStatsJson = "BusinessStatistics.json";
@@ -71,11 +71,47 @@ public class Main {
 
 		
 		//statsManager.menuDisplayBusinessData(users, plans);
-		menuPlans(plans);
+		//menuPlans(plans);
 		//banUsers(users,routeUserJson);
 		
 		//addPlan(plans,routePlanJson);
         //menuUsers(users);
+        Scanner in = new Scanner(System.in);
+            int choice,otro;
+            otro=1;
+            while(otro==1){
+                System.out.println("1. plans\n2. business statistics\n3. register user\n4. add plan\n5. freeze plan\n6. ban user\n7. user menu\n8. update subscription\n9. exit");
+                choice = in.nextInt();
+                switch(choice){
+                    case 1:
+                        Main.menuPlans(plans);
+                        break;
+                    case 2:
+                        statsManager.menuDisplayBusinessData(users, plans);
+                        break;
+                    case 3:
+                        registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
+                        break;
+                    case 4:
+                        addPlan(plans,routePlanJson);
+                        break;
+                    case 5:
+                        menuFreezeDueDate(users, routeUserJson);
+                        break;
+                    case 6:
+                        banUsers(users,routeUserJson);
+                        break;
+                    case 7:
+                        menuUsers(users);
+                        break;
+                    case 8:
+                        updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
+                        break;
+                    case 9:
+                        otro=0;
+                        break;
+                }
+            }
         }// MAIN
 	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
