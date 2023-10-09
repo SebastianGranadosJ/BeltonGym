@@ -1,4 +1,6 @@
 package co.edu.upb.BeltonGym;
+
+import  co.edu.upb.BeltonGym.GUI.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Scanner;
@@ -25,6 +27,8 @@ public class Main {
 		plans = readJsonArrayListPlan(routePlanJson);
 		users = readJsonArrayListUser(routeUserJson);
 		statsManager = readJsonBusinessStatistics(routeStatsJson);
+		
+		
 		
 		
 		/*
@@ -67,7 +71,7 @@ public class Main {
 		
         //
         
-		//menuUsers(users);
+		menuUsers(users);
 
 		
 		//statsManager.menuDisplayBusinessData(users, plans);
