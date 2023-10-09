@@ -13,7 +13,7 @@ public class User {
 	private boolean banned = false;
 	
 	public User() {
-		
+
 	}
 	public User(String name, int age, String id, String gender) {
 		setName(name);

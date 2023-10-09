@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		String routeUserJson = "Users.json";
 		String routePlanJson = "Plans.json";
 		String routeStatsJson = "BusinessStatistics.json";
@@ -26,6 +26,9 @@ public class Main {
 		users = readJsonArrayListUser(routeUserJson);
 		statsManager = readJsonBusinessStatistics(routeStatsJson);
 		
+		 Scanner in = new Scanner(System.in);
+         int choice,otro;
+         otro=1;
 		
 		/*
 	
@@ -71,11 +74,62 @@ public class Main {
 
 		
 		//statsManager.menuDisplayBusinessData(users, plans);
-		menuPlans(plans);
+		//menuPlans(plans);
 		//banUsers(users,routeUserJson);
 		
 		//addPlan(plans,routePlanJson);
         //menuUsers(users);
+		
+            while(otro==1){
+            	
+                System.out.println("1. Menú de Usaurios");
+                System.out.println("2. Estadísticas del Negocio");
+                System.out.println("3. Registrar Usaurio");
+                System.out.println("4. Renovar Suscripción");
+                System.out.println("5. Congelar Mensualidad");
+                System.out.println("6. Banear Usaurio");
+                System.out.println("7. Menú de Planes");
+                System.out.println("8. Añadir Plan");
+                System.out.println("9. Notificaciones");
+                System.out.println("10. Cerrar Programa");
+                
+                choice = in.nextInt();
+                in.nextLine();
+                switch(choice){
+                    case 1:
+                        menuUsers(users);
+                        break;
+                    case 2:
+                        statsManager.menuDisplayBusinessData(users, plans);
+                        break;
+                    case 3:
+                        registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
+                        break;
+                    case 4:
+                        updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
+                        break;
+                    case 5:
+                        menuFreezeDueDate(users, routeUserJson);
+                        break;
+                    case 6:
+                        banUsers(users,routeUserJson);
+                        break;
+                    case 7:
+                    	Main.menuPlans(plans);
+                        break;
+                    case 8:
+                    	addPlan(plans,routePlanJson);
+                        break;
+                    case 9:
+                    	System.out.println("---------------NOTIFICACIONES---------------");
+                    	notifyUsertDue(users);
+                    	System.out.println("--------------------------------------------");
+                        break;
+                    default:
+                    	System.out.println("Ingrese un valor valido");
+                }
+            }
+            in.close();
         }// MAIN
 	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
@@ -150,7 +204,7 @@ public class Main {
 	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
 		
 		if(user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
-			System.out.println(user.getDueDatePlan() + " El plan " + user.getCurrentPlan() + " de " + user.getName() + " ha vencido");
+			System.out.println(user.getDueDatePlan() + " El plan " + user.getCurrentPlan().getPlan() + " de " + user.getName() + " ha vencido");
 		}
 	}//NotifyUserDue
 
