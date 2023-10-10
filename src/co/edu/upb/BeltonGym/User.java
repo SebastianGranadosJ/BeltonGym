@@ -137,4 +137,8 @@ public class User {
         this.banned = banned;
     }
 
+	public void setHistory(String history) {
+		this.history = history;
+	}
+
 }

@@ -14,11 +14,16 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+    	
         String routeUserJson = "Users.json";
         String routePlanJson = "Plans.json";
         String routeStatsJson = "BusinessStatistics.json";
+        
+        List<User> users = new ArrayList<>();
+        List<Plan> plans = new ArrayList<>();
+        BusinessStatistics statsManager = new BusinessStatistics();
+        
 
-<<<<<<< HEAD
 		plans = readJsonArrayListPlan(routePlanJson);
 		users = readJsonArrayListUser(routeUserJson);
 		statsManager = readJsonBusinessStatistics(routeStatsJson);
@@ -27,22 +32,7 @@ public class Main {
          int choice;
          int other = 1;
 		
-		/*
-=======
-        List<User> users = new ArrayList<>();
-        List<Plan> plans = new ArrayList<>();
-        BusinessStatistics statsManager = new BusinessStatistics();
-
-        plans = readJsonArrayListPlan(routePlanJson);
-        users = readJsonArrayListUser(routeUserJson);
-        statsManager = readJsonBusinessStatistics(routeStatsJson);
-
-        Scanner in = new Scanner(System.in);
-        int choice, otro;
-        otro = 1;
-
-        /*
->>>>>>> 639f0fe588cacc437eaaa8c962477ccd3d10267f
+	/*
 	
 	        plans.add(new Plan("1 Mes", 60000, "Plan mensual", 0, 1, 0));
 	        plans.add(new Plan("2 Semanas", 35000, "Plan de 2 semanas", 14, 0 , 0));
@@ -78,7 +68,6 @@ public class Main {
         //menuFreezeDueDate(users, routeUserJson);
         //
         //menuUsers(users);
-<<<<<<< HEAD
             System.out.println("Bienvenido a Beltongym: Tu compañero en el camino hacia una vida más saludable y activa.\n\n");
             while(other==1){
             	System.out.println("MENU DE FUNCIONALIDADES\n");
@@ -91,7 +80,8 @@ public class Main {
                 System.out.println("7. Menú de Planes");
                 System.out.println("8. Añadir Plan");
                 System.out.println("9. Estadísticas del Negocio");
-                System.out.println("10. Cerrar Programa");
+                System.out.println("10. Menu de historial de usuario");
+                System.out.println("11. Cerrar Programa");
                 
                 choice = in.nextInt();
                 in.nextLine();
@@ -142,6 +132,11 @@ public class Main {
                         System.out.println("--------------------------------------------");
                         break;
                     case 10:
+                        System.out.println("----------MENU HISTORIAL DE USUARIO---------");
+                        menuUserHistory(users);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 11:
                         other=0;
                         System.out.println("\n\n¡Gracias por utilizar Beltongym! Esperamos haberte ayudado en tu jornada hacia una vida más saludable. ¡Nos vemos pronto en el gimnasio!");
                         break;
@@ -159,144 +154,6 @@ public class Main {
             
         }// MAIN
 	
-	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
-		Scanner in = new Scanner(System.in);
-		List<User> oldUsers = new ArrayList<>();
-		int answer;
-		int nmr;
-		int indexUser;
-		Plan selectedPlan;
-		
-			for (int ii = 0; ii < users.size(); ii++) {
-				if (users.get(ii).isStatusPlan() == false) {
-					oldUsers.add(users.get(ii));
-					}
-			}
-		//System.out.println("Quiere renovar cliente?");
-			System.out.println("Los siguientes son los usuarios con el plan vencido: ");
-			for(int ii = 0; ii < oldUsers.size(); ii++) {
-				nmr = ii + 1;
-				System.out.println(nmr + ". " + oldUsers.get(ii).getName()+ " " + oldUsers.get(ii).getId());
-			}
-			
-			System.out.println("Ingrese el numero del usuario al que desea Renovar la suscripción: ");
-			indexUser = in.nextInt() - 1;
-			in.nextLine();
-			
-			System.out.println("Desea renovar la suscripccion de:  " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId());
-			System.out.println("1. Si 2.No" );
-			answer = in.nextInt();
-			in.nextLine();
-			
-			
-			
-			if(answer == 1) {
-				
-				selectedPlan = selectPlan(plans);
-				registerPayment(selectedPlan, stats, routeStats);
-				
-				oldUsers.get(indexUser).setCurrentPlan(selectedPlan);
-				selectedPlan.incrementTotalTimesAdquired();
-				
-				oldUsers.get(indexUser).setStatusPlan(true);
-				oldUsers.get(indexUser).setDateLastPayment(LocalDate.now());
-				oldUsers.get(indexUser).calDueDatePlan();
-				
-				stats.plusTotalSubs(1);
-				stats.plusTotalProfits(selectedPlan.getValue());
-				writeJsonBusinessStatistics(routeStats, stats);
-				
-				
-				System.out.println("Suscripccion Renovada" );
-				System.out.println();
-				
-				System.out.println("Cliente " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId() + " renovado: ");
-				System.out.println();
-				
-				System.out.println("Nombre: " + oldUsers.get(indexUser).getName());
-				System.out.println("Edad: " + oldUsers.get(indexUser).getAge());
-				System.out.println("Genero: " + oldUsers.get(indexUser).getGender());
-				System.out.println("Id: " + oldUsers.get(indexUser).getId());
-				System.out.println("Plan actual: " + oldUsers.get(indexUser).getCurrentPlan().getPlan());
-				System.out.println("Estado del plan: " + oldUsers.get(indexUser).statusPlanAsString());
-				System.out.println("Fecha de ultimo pago: " + oldUsers.get(indexUser).getDateLastPayment());
-				System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
-			}
-			writeJsonArrayListUser(routeUser, users);
-			writeJsonArrayListPlan(routePlan, plans);
-			
-			
-	}//updateSubs()
-	
-	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
-		
-		if(user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
-			System.out.println(user.getDueDatePlan() + " El plan " + user.getCurrentPlan().getPlan() + " de " + user.getName() + " ha vencido");
-		}
-	}//NotifyUserDue
-=======
-        //statsManager.menuDisplayBusinessData(users, plans);
-        //menuPlans(plans);
-        //banUsers(users,routeUserJson);
-        //addPlan(plans,routePlanJson);
-        //menuUsers(users);
-        while (otro == 1) {
-
-            System.out.println("1. Menú de Usaurios");
-            System.out.println("2. Estadísticas del Negocio");
-            System.out.println("3. Registrar Usaurio");
-            System.out.println("4. Renovar Suscripción");
-            System.out.println("5. Congelar Mensualidad");
-            System.out.println("6. Banear Usaurio");
-            System.out.println("7. Menú de Planes");
-            System.out.println("8. Añadir Plan");
-            System.out.println("9. Notificaciones");
-            System.out.println("10. Historial");
-            System.out.println("11. Cerrar Programa");
-
-            choice = in.nextInt();
-            in.nextLine();
-            switch (choice) {
-                case 1:
-                    menuUsers(users);
-                    break;
-                case 2:
-                    statsManager.menuDisplayBusinessData(users, plans);
-                    break;
-                case 3:
-                    registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
-                    break;
-                case 4:
-                    updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
-                    break;
-                case 5:
-                    menuFreezeDueDate(users, routeUserJson);
-                    break;
-                case 6:
-                    banUsers(users, routeUserJson);
-                    break;
-                case 7:
-                    Main.menuPlans(plans);
-                    break;
-                case 8:
-                    addPlan(plans, routePlanJson);
-                    break;
-                case 9:
-                    System.out.println("---------------NOTIFICACIONES---------------");
-                    notifyUsertDue(users);
-                    System.out.println("--------------------------------------------");
-                    break;
-                case 10:
-                    menuUserHistory(users);
-                    break;
-                default:
-                    System.out.println("Ingrese un valor valido");
-            }
-        }
-        in.close();
-    }// MAIN
->>>>>>> 639f0fe588cacc437eaaa8c962477ccd3d10267f
-
     public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
         Scanner in = new Scanner(System.in);
         List<User> oldUsers = new ArrayList<>();
@@ -674,7 +531,7 @@ public class Main {
             if (choice == 1) {
                 System.out.println("El usuario " + users.get(index).getName() + "ha sido desbaneado");
                 user.setBanned(false);
-                user.addToHistory("Ha sido baneado.");
+                user.addToHistory("Ha sido desbaneado.");
                 writeJsonArrayListUser(routeUsers, users);
             } else {
                 System.out.println("Accion cancelada ");
