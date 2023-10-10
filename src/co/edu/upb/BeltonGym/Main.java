@@ -79,52 +79,37 @@ public class Main {
 		
 		//addPlan(plans,routePlanJson);
         //menuUsers(users);
+<<<<<<< HEAD
 		
             while(other==1){
             	
                 System.out.println("1. Menú de Usaurios");
                 System.out.println("2. Estadísticas del Negocio");
+=======
+            System.out.println("Bienvenido a Beltongym: Tu compañero en el camino hacia una vida más saludable y activa.\n\n");
+            while(otro==1){
+            	System.out.println("MENU DE FUNCIONALIDADES\n");
+                System.out.println("1. Notificaciones");
+                System.out.println("2. Menú de Usaurios");
+>>>>>>> bfab912967c7a1c37d3026c474214d844706c5ab
                 System.out.println("3. Registrar Usaurio");
-                System.out.println("4. Renovar Suscripción");
-                System.out.println("5. Congelar Mensualidad");
-                System.out.println("6. Banear Usaurio");
+                System.out.println("4. Banear Usaurio");
+                System.out.println("5. Renovar Suscripción");
+                System.out.println("6. Congelar Mensualidad");
                 System.out.println("7. Menú de Planes");
                 System.out.println("8. Añadir Plan");
-                System.out.println("9. Notificaciones");
+                System.out.println("9. Estadísticas del Negocio");
                 System.out.println("10. Cerrar Programa");
                 
                 choice = in.nextInt();
                 in.nextLine();
                 switch(choice){
                     case 1:
-                        menuUsers(users);
-                        break;
-                    case 2:
-                        statsManager.menuDisplayBusinessData(users, plans);
-                        break;
-                    case 3:
-                        registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
-                        break;
-                    case 4:
-                        updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
-                        break;
-                    case 5:
-                        menuFreezeDueDate(users, routeUserJson);
-                        break;
-                    case 6:
-                        banUsers(users,routeUserJson);
-                        break;
-                    case 7:
-                    	Main.menuPlans(plans);
-                        break;
-                    case 8:
-                    	addPlan(plans,routePlanJson);
-                        break;
-                    case 9:
                     	System.out.println("---------------NOTIFICACIONES---------------");
                     	notifyUsertDue(users);
                     	System.out.println("--------------------------------------------");
                         break;
+<<<<<<< HEAD
                     case 10:
 	                    System.out.println("Programa cerrado");
 	                    other = 0;
@@ -138,6 +123,58 @@ public class Main {
                 for(int ii = 0; ii <30; ii++) {
                 	 System.out.println();
                 }
+=======
+                    case 2:
+                        System.out.println("--------------MENÚ DE USUARIOS--------------");
+                        menuUsers(users);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 3:
+                        System.out.println("-------------REGISTRAR  USUARIO-------------");
+                        registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 4:
+                        System.out.println("---------------BANEAR USUARIO---------------");
+                        banUsers(users,routeUserJson);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 5:
+                        System.out.println("------------RENOVAR  SUSCRIPCIÓN------------");
+                        updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 6:
+                        System.out.println("------------CONGELAR MENSUALIDAD------------");
+                        menuFreezeDueDate(users, routeUserJson);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 7:
+                        System.out.println("---------------MENU DE PLANES---------------");
+                    	Main.menuPlans(plans);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 8:
+                        System.out.println("----------------AGREGAR PLAN----------------");
+                    	addPlan(plans,routePlanJson);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 9:
+                        System.out.println("----------ESTADISTICAS  DE  NEGOCIO---------");
+                        statsManager.menuDisplayBusinessData(users, plans);
+                        System.out.println("--------------------------------------------");
+                        break;
+                    case 10:
+                        otro=0;
+                        System.out.println("\n\n¡Gracias por utilizar Beltongym! Esperamos haberte ayudado en tu jornada hacia una vida más saludable. ¡Nos vemos pronto en el gimnasio!");
+                        break;
+                    default:
+                    	System.out.println("Ingrese un valor valido");
+                }
+                
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                
+>>>>>>> bfab912967c7a1c37d3026c474214d844706c5ab
             }
             if(other != 0) {
             	in.close();	
