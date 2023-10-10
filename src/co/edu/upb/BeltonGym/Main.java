@@ -79,19 +79,11 @@ public class Main {
 		
 		//addPlan(plans,routePlanJson);
         //menuUsers(users);
-<<<<<<< HEAD
-		
-            while(other==1){
-            	
-                System.out.println("1. Menú de Usaurios");
-                System.out.println("2. Estadísticas del Negocio");
-=======
             System.out.println("Bienvenido a Beltongym: Tu compañero en el camino hacia una vida más saludable y activa.\n\n");
-            while(otro==1){
+            while(other==1){
             	System.out.println("MENU DE FUNCIONALIDADES\n");
                 System.out.println("1. Notificaciones");
                 System.out.println("2. Menú de Usaurios");
->>>>>>> bfab912967c7a1c37d3026c474214d844706c5ab
                 System.out.println("3. Registrar Usaurio");
                 System.out.println("4. Banear Usaurio");
                 System.out.println("5. Renovar Suscripción");
@@ -109,21 +101,6 @@ public class Main {
                     	notifyUsertDue(users);
                     	System.out.println("--------------------------------------------");
                         break;
-<<<<<<< HEAD
-                    case 10:
-	                    System.out.println("Programa cerrado");
-	                    other = 0;
-	                    break;
-                    default:
-                    	System.out.println("Ingrese un valor valido");
-                }
-                System.out.println();
-                System.out.println("Presione enter para continuar");
-                in.nextLine();
-                for(int ii = 0; ii <30; ii++) {
-                	 System.out.println();
-                }
-=======
                     case 2:
                         System.out.println("--------------MENÚ DE USUARIOS--------------");
                         menuUsers(users);
@@ -165,16 +142,16 @@ public class Main {
                         System.out.println("--------------------------------------------");
                         break;
                     case 10:
-                        otro=0;
+                        other=0;
                         System.out.println("\n\n¡Gracias por utilizar Beltongym! Esperamos haberte ayudado en tu jornada hacia una vida más saludable. ¡Nos vemos pronto en el gimnasio!");
                         break;
                     default:
                     	System.out.println("Ingrese un valor valido");
                 }
-                
+                System.out.println("Presione enter para continuar");
+                in.nextLine();
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                 
->>>>>>> bfab912967c7a1c37d3026c474214d844706c5ab
             }
             if(other != 0) {
             	in.close();	
