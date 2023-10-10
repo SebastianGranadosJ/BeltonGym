@@ -68,7 +68,7 @@ public class Main {
 		//writeJsonArrayListPlan(routePlanJson, plans);
 		//writeJsonArrayListUser(routeUserJson, users);
 		//registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
-		//updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
+		updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
         //menuFreezeDueDate(users, routeUserJson);
 		
         //
@@ -83,27 +83,24 @@ public class Main {
 		//addPlan(plans,routePlanJson);
         //menuUsers(users);
         }// MAIN
-	
+	public static List<User> listReturnUserInactiveBasicData(List<User> users) {
+		List<User> oldUsers = new ArrayList<>();
+		for (int ii = 0; ii < users.size(); ii++) {
+			if (users.get(ii).isStatusPlan() == false) {
+				oldUsers.add(users.get(ii));
+				}
+		}
+		return oldUsers;
+	}
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
 		Scanner in = new Scanner(System.in);
-		List<User> oldUsers = new ArrayList<>();
+		List<User> oldUsers = listReturnUserInactiveBasicData(users);
 		int answer;
-		int nmr;
+
 		int indexUser;
 		Plan selectedPlan;
-		
-			for (int ii = 0; ii < users.size(); ii++) {
-				if (users.get(ii).isStatusPlan() == false) {
-					oldUsers.add(users.get(ii));
-					}
-			}
-		//System.out.println("Quiere renovar cliente?");
-			System.out.println("Los siguientes son los usuarios con el plan vencido: ");
-			for(int ii = 0; ii < oldUsers.size(); ii++) {
-				nmr = ii + 1;
-				System.out.println(nmr + ". " + oldUsers.get(ii).getName()+ " " + oldUsers.get(ii).getId());
-			}
-			
+			System.out.println("Usuario que su plan vencido: ");
+			System.out.println(stringUsersBasicData(oldUsers));
 			System.out.println("Ingrese el numero del usuario al que desea Renovar la suscripción: ");
 			indexUser = in.nextInt() - 1;
 			in.nextLine();
@@ -188,6 +185,19 @@ public class Main {
 			stringReturn += "Estado del plan: " + users.get(index).statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + users.get(index).getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan()+"\n";
+			
+			return stringReturn;
+	 }
+	 public static String stringReturnUserData(User user) { //This method return user's data as String
+		 	String stringReturn = "";			
+			stringReturn += "Nombre: " + user.getName() +"\n";
+			stringReturn += "Edad: " + user.getAge() + "\n";
+			stringReturn += "Genero: " + user.getGender()+"\n";
+			stringReturn += "Id: " + user.getId()+"\n";
+			stringReturn += "Plan actual: " + user.getCurrentPlan().getPlan()+"\n";
+			stringReturn += "Estado del plan: " + user.statusPlanAsString()+"\n";
+			stringReturn += "Fecha de ultimo pago: " + user.getDateLastPayment()+"\n";
+			stringReturn += "Fecha de vencimiento del plan: " + user.getDueDatePlan()+"\n";
 			
 			return stringReturn;
 	 }

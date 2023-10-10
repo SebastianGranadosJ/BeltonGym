@@ -30,7 +30,8 @@ public class MenuUsersPanel extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-
+	private String routeUserJson = "Users.json";
+	private List <User> users =Main.readJsonArrayListUser(routeUserJson);
 	/**
 	 * Launch the application.
 	 */
@@ -52,8 +53,7 @@ public class MenuUsersPanel extends JFrame {
 	 */
 	public MenuUsersPanel() {
 		
-		String routeUserJson = "Users.json";
-		final List<User> users =Main.readJsonArrayListUser(routeUserJson);
+		
 	
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,6 +98,7 @@ public class MenuUsersPanel extends JFrame {
 		panelFunctions.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.setLayout(new GridLayout(1, 0, 0, 0));
 		
+		//PanelUsers
 		JPanel panelUsers = new JPanel();
 		panelUsers.setBorder(UIManager.getBorder("DesktopIcon.border"));
 		panelFunctions.add(panelUsers);
@@ -151,7 +152,7 @@ public class MenuUsersPanel extends JFrame {
 		
 		
 		
-		//UsersBasicData
+		//EndUsersBasicData
 	
 		
 	
