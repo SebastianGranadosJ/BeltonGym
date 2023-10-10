@@ -81,7 +81,7 @@ public class Main {
 		//banUsers(users,routeUserJson);
 		
 		//addPlan(plans,routePlanJson);
-        menuUsers(users);
+        //menuUsers(users);
         }// MAIN
 	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
@@ -235,7 +235,7 @@ public class Main {
 		
 		stats.plusTotalSubs(1);
 		stats.plusTotalProfits(currentPlan.getValue());
-		writeJsonBusinessStatistics(routeStats, stats);
+		
 		
 		user.setCurrentPlan(currentPlan);
 		currentPlan.incrementTotalTimesAdquired();
@@ -244,6 +244,7 @@ public class Main {
 		user.calDueDatePlan(); 
 		
 		users.add(user);
+		writeJsonBusinessStatistics(routeStats, stats);
 		writeJsonArrayListUser(routeUsers, users);
 		writeJsonArrayListPlan(routePlan, plans);
 	}//RegisterUser()
