@@ -28,6 +28,8 @@ public class Main {
 		users = readJsonArrayListUser(routeUserJson);
 		statsManager = readJsonBusinessStatistics(routeStatsJson);
 		
+		MainPanel mainPanel = new MainPanel();
+		mainPanel.setVisible(true);
 		
 		
 		
@@ -70,8 +72,8 @@ public class Main {
         //menuFreezeDueDate(users, routeUserJson);
 		
         //
-        
-		menuUsers(users);
+        //System.out.println(stringUsersBasicData(users));
+		//menuUsers(users);
 
 		
 		//statsManager.menuDisplayBusinessData(users, plans);
@@ -79,7 +81,7 @@ public class Main {
 		//banUsers(users,routeUserJson);
 		
 		//addPlan(plans,routePlanJson);
-        //menuUsers(users);
+        menuUsers(users);
         }// MAIN
 	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
@@ -163,28 +165,47 @@ public class Main {
 			notifyUserDue(users.get(ii));
 		}
 	}//NotifyUserDue
-	 
+	 public static String stringUsersBasicData(List<User> users) {
+		 String usersBasicData = "";
+		 int nmr = 0;
+		 
+		 for(int ii = 0; ii < users.size(); ii++) {
+				nmr = ii + 1;
+				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() +"\n";
+			}
+		 
+		 return usersBasicData;
+	 }
+	 public static String stringReturnUserData(List<User> users, int ii) { //This method return user's data as String
+		 	String stringReturn = "";
+			int index = ii - 1;
+			
+			stringReturn += "Nombre: " + users.get(index).getName() +"\n";
+			stringReturn += "Edad: " + users.get(index).getAge() + "\n";
+			stringReturn += "Genero: " + users.get(index).getGender()+"\n";
+			stringReturn += "Id: " + users.get(index).getId()+"\n";
+			stringReturn += "Plan actual: " + users.get(index).getCurrentPlan().getPlan()+"\n";
+			stringReturn += "Estado del plan: " + users.get(index).statusPlanAsString()+"\n";
+			stringReturn += "Fecha de ultimo pago: " + users.get(index).getDateLastPayment()+"\n";
+			stringReturn += "Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan()+"\n";
+			
+			return stringReturn;
+	 }
 	public static void menuUsers(List<User> users) {
-		Scanner t = new Scanner(System.in);
+		
 		int index;
 		int nmr = 0;
 		System.out.println("Los siguientes son los usuarios registrados: ");
-		for(int ii = 0; ii < users.size(); ii++) {
-			nmr = ii + 1;
-			System.out.println(nmr + ". " + users.get(ii).getName() + " " + users.get(ii).getId());
-		}
-		
-		System.out.println("Ingrese el numero del usuario al que desea ver la informacion: ");
-		index = t.nextInt() - 1;
+		 
+		System.out.println(stringUsersBasicData(users));
+		Scanner t =   new Scanner(System.in); 
+		System.out.println("Ingrese numero de usuario que desea seleccionar ");
+		index = t.nextInt();
 		t.nextLine();
-		System.out.println("Nombre: " + users.get(index).getName());
-		System.out.println("Edad: " + users.get(index).getAge());
-		System.out.println("Genero: " + users.get(index).getGender());
-		System.out.println("Id: " + users.get(index).getId());
-		System.out.println("Plan actual: " + users.get(index).getCurrentPlan().getPlan());
-		System.out.println("Estado del plan: " + users.get(index).statusPlanAsString());
-		System.out.println("Fecha de ultimo pago: " + users.get(index).getDateLastPayment());
-		System.out.println("Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan());
+		System.out.println(stringReturnUserData(users, index));
+		
+
+		
 	}//MenuUsers()
 	
 	public static void registerUser(List<User> users, List<Plan> plans, String routeUsers, BusinessStatistics stats, String routeStats, String routePlan) {

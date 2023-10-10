@@ -84,7 +84,7 @@
 		"name": "Wilson Moreno",
 		"age": 18,
 		"gender": "m",
-		"id": "123123",
+		"id": "103123821",
 		"currentPlan": {
 			"plan": "1 Dia",
 			"value": 8000.0,
@@ -104,87 +104,6 @@
 			2023,
 			9,
 			27
-		],
-		"banned": false
-	},
-	{
-		"name": "S",
-		"age": 1,
-		"gender": "m",
-		"id": "1",
-		"currentPlan": {
-			"plan": "1 Año",
-			"value": 660000.0,
-			"description": "Plan anual",
-			"durationDay": 0,
-			"durationMonth": 0,
-			"durationYear": 1,
-			"totalTimesAdquired": 1
-		},
-		"statusPlan": true,
-		"dateLastPayment": [
-			2023,
-			9,
-			26
-		],
-		"dueDatePlan": [
-			2024,
-			9,
-			26
-		],
-		"banned": false
-	},
-	{
-		"name": "Manu",
-		"age": 1,
-		"gender": "m",
-		"id": "1",
-		"currentPlan": {
-			"plan": "1 Año",
-			"value": 660000.0,
-			"description": "Plan anual",
-			"durationDay": 0,
-			"durationMonth": 0,
-			"durationYear": 1,
-			"totalTimesAdquired": 1
-		},
-		"statusPlan": true,
-		"dateLastPayment": [
-			2023,
-			9,
-			26
-		],
-		"dueDatePlan": [
-			2024,
-			9,
-			26
-		],
-		"banned": false
-	},
-	{
-		"name": "m",
-		"age": 1,
-		"gender": "m",
-		"id": "1",
-		"currentPlan": {
-			"plan": "1 Dia",
-			"value": 8000.0,
-			"description": "Plan diario",
-			"durationDay": 1,
-			"durationMonth": 0,
-			"durationYear": 0,
-			"totalTimesAdquired": 2
-		},
-		"statusPlan": true,
-		"dateLastPayment": [
-			2023,
-			9,
-			27
-		],
-		"dueDatePlan": [
-			2023,
-			9,
-			28
 		],
 		"banned": false
 	}
