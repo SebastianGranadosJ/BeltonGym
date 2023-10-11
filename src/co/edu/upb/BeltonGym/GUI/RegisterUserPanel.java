@@ -116,6 +116,7 @@ public class RegisterUserPanel extends JFrame {
 		JPanel panelRegister = new JPanel();
 		panelData.add(panelRegister, BorderLayout.SOUTH);
 		JTextPane textPaneRegister = new JTextPane();
+		textPaneRegister.setEditable(false);
 		String txtRegister;
 		txtRegister = "Nombre: " + user.getName() +"\n" +
 					 "Edad: "+ user.getAge() + "\n" +
