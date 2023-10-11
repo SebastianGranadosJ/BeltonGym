@@ -19,14 +19,14 @@ public class Main {
         String routePlanJson = "Plans.json";
         String routeStatsJson = "BusinessStatistics.json";
         
-        List<User> users = new ArrayList<>();
-        List<Plan> plans = new ArrayList<>();
-        BusinessStatistics statsManager = new BusinessStatistics();
+        List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
+        List<Plan> plans = JsonManager.readJsonArrayListPlan(routePlanJson);
+        BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
         
 
-		plans = readJsonArrayListPlan(routePlanJson);
-		users = readJsonArrayListUser(routeUserJson);
-		statsManager = readJsonBusinessStatistics(routeStatsJson);
+		plans = JsonManager.readJsonArrayListPlan(routePlanJson);
+		users = JsonManager.readJsonArrayListUser(routeUserJson);
+		statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 		
 		 Scanner in = new Scanner(System.in);
          int choice;
@@ -97,10 +97,11 @@ public class Main {
                         System.out.println("--------------------------------------------");
                         break;
                     case 3:
-                        System.out.println("-------------REGISTRAR  USUARIO-------------");
+                    	System.out.println("-------------REGISTRAR  USUARIO-------------");
                         registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
                         System.out.println("--------------------------------------------");
                         break;
+
                     case 4:
                         System.out.println("---------------BANEAR USUARIO---------------");
                         banUsers(users,routeUserJson);
@@ -143,6 +144,9 @@ public class Main {
                     default:
                     	System.out.println("Ingrese un valor valido");
                 }
+                JsonManager.writeJsonArrayListUser(routeUserJson, users); // Actualizar el archivo JSON con la nueva lista de usuarios
+                statsManager.incrementTotalUsers(); // Incrementar el contador de usuarios en las estadísticas
+                JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager); // Actualizar el archivo JSON de estadísticas
                 System.out.println("Presione enter para continuar");
                 in.nextLine();
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -198,7 +202,7 @@ public class Main {
 
             stats.plusTotalSubs(1);
             stats.plusTotalProfits(selectedPlan.getValue());
-            writeJsonBusinessStatistics(routeStats, stats);
+            JsonManager.writeJsonBusinessStatistics(routeStats, stats);
 
             System.out.println("Suscripccion Renovada");
             System.out.println();
@@ -215,8 +219,8 @@ public class Main {
             System.out.println("Fecha de ultimo pago: " + oldUsers.get(indexUser).getDateLastPayment());
             System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
         }
-        writeJsonArrayListUser(routeUser, users);
-        writeJsonArrayListPlan(routePlan, plans);
+        JsonManager.writeJsonArrayListUser(routeUser, users);
+        JsonManager.writeJsonArrayListPlan(routePlan, plans);
 
     }
 
@@ -285,7 +289,7 @@ public class Main {
 
         stats.plusTotalSubs(1);
         stats.plusTotalProfits(currentPlan.getValue());
-        writeJsonBusinessStatistics(routeStats, stats);
+        JsonManager.writeJsonBusinessStatistics(routeStats, stats);
 
         user.setCurrentPlan(currentPlan);
         currentPlan.incrementTotalTimesAdquired();
@@ -295,97 +299,29 @@ public class Main {
         user.addToHistory("Se ha registrado.");
 
         users.add(user);
-        writeJsonArrayListUser(routeUsers, users);
-        writeJsonArrayListPlan(routePlan, plans);
+        JsonManager.writeJsonArrayListUser(routeUsers, users);
+        JsonManager.writeJsonArrayListPlan(routePlan, plans);
     }//RegisterUser()
-
     public static Plan selectPlan(List<Plan> plans) {
         Scanner in = new Scanner(System.in);
-        int indexPlan;
 
-        System.out.println("Seleccione el plan que desea: ");
-        for (int ii = 0; ii < plans.size(); ii++) {
-            System.out.println(ii + 1 + ". " + plans.get(ii).getPlan());
+        System.out.println("Planes Disponibles:");
+        for (int i = 0; i < plans.size(); i++) {
+            Plan plan = plans.get(i);
+            System.out.println((i + 1) + ". " + plan.getPlan());
         }
-        indexPlan = in.nextInt() - 1;
-        in.nextLine();
-        return plans.get(indexPlan);
-    }//SelectPlan()
 
-    public static void writeJsonArrayListUser(String route, List<User> users) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.writeValue(new File(route), users);
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Elija un plan ingresando el número correspondiente:");
+        int choice = in.nextInt();
+
+        if (choice >= 1 && choice <= plans.size()) {
+            return plans.get(choice - 1);
+        } else {
+            System.out.println("Selección no válida. Seleccionando el primer plan por defecto.");
+            return plans.get(0);
         }
     }
-
-    public static void writeJsonBusinessStatistics(String route, BusinessStatistics stats) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.writeValue(new File(route), stats);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void writeJsonArrayListPlan(String route, List<Plan> plans) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.writeValue(new File(route), plans);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }//WriteJsonArrayPlan()
-
-    public static List<Plan> readJsonArrayListPlan(String route) {
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-
-            return objectMapper.readValue(new File(route), new TypeReference<List<Plan>>() {
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }//ReadJsonArrayListPlan()
-
-    public static List<User> readJsonArrayListUser(String route) {
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-
-            return objectMapper.readValue(new File(route), new TypeReference<List<User>>() {
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }//ReadJsonArrayListUser()
-
-    public static BusinessStatistics readJsonBusinessStatistics(String route) {
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-
-            return objectMapper.readValue(new File(route), new TypeReference<BusinessStatistics>() {
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }//ReadJsonArrayListUser()
+    
 
     public static void addPlan(List<Plan> plans, String routePlans) {
         String nombre;
@@ -412,7 +348,7 @@ public class Main {
         in.nextLine();
 
         plans.add(new Plan(nombre, value, description, durationDay, durationMonth, durationYear));
-        writeJsonArrayListPlan(routePlans, plans);
+        JsonManager.writeJsonArrayListPlan(routePlans, plans);
     }
 
     public static void menuFreezeDueDate(List<User> users, String route) { // this function freezes the plan and creates a new due date
@@ -451,7 +387,7 @@ public class Main {
         System.out.println("El plan de " + usersActive.get(index).getName() + " ha sido congelado por " + daysToFreeze + " días.");
         System.out.println("La antigua fecha de vencimiento era: " + lastDueDate);
         System.out.println("La nueva fecha de vencimiento es: " + usersActive.get(index).getDueDatePlan());
-        writeJsonArrayListUser(route, users);
+        JsonManager.writeJsonArrayListUser(route, users);
     }//MenuFreeseDueDate()
 
     public static void registerPayment(Plan plan, BusinessStatistics stats, String routeStats) {
@@ -472,21 +408,21 @@ public class Main {
                 stats.plusProfitCardPayment(plan.getValue());
                 stats.plusTimesCardPayment(1);
                 System.out.println("Has registrado exitosamente tu metodo de pago con tarjeta");
-                writeJsonBusinessStatistics(routeStats, stats);
+                JsonManager.writeJsonBusinessStatistics(routeStats, stats);
                 break;
             }
             case 2: {
                 stats.plusProfitCashPayment(plan.getValue());
                 stats.plusTimesCashPayment(1);
                 System.out.println("Has registrado exitosamente tu metodo de pago en efectivo");
-                writeJsonBusinessStatistics(routeStats, stats);
+                JsonManager.writeJsonBusinessStatistics(routeStats, stats);
                 break;
             }
             case 3: {
                 stats.plusProfitBankTransfer(plan.getValue());
                 stats.plusTimesBankTransfer(1);
                 System.out.println("Has registrado exitosamente tu metodo de pago por transferencia bancaria");
-                writeJsonBusinessStatistics(routeStats, stats);
+                JsonManager.writeJsonBusinessStatistics(routeStats, stats);
                 break;
             }
             default:
@@ -519,7 +455,7 @@ public class Main {
                 System.out.println("El usuario " + users.get(index).getName() + "ha sido baneado");
                 user.setBanned(true);
                 user.addToHistory("Ha sido baneado.");
-                writeJsonArrayListUser(routeUsers, users);
+                JsonManager.writeJsonArrayListUser(routeUsers, users);
             } else {
                 System.out.println("Accion cancelada ");
             }
@@ -532,7 +468,7 @@ public class Main {
                 System.out.println("El usuario " + users.get(index).getName() + "ha sido desbaneado");
                 user.setBanned(false);
                 user.addToHistory("Ha sido desbaneado.");
-                writeJsonArrayListUser(routeUsers, users);
+                JsonManager.writeJsonArrayListUser(routeUsers, users);
             } else {
                 System.out.println("Accion cancelada ");
             }

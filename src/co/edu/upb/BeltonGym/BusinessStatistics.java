@@ -17,6 +17,8 @@ public class BusinessStatistics {
 	
 	
 	public BusinessStatistics() {
+		public void incrementTotalUsers() {
+	        totalSubs++;
 	} 
 	//----------------Functions--------------------
 	public void displayPlanAdquisitionStatistics(List<Plan> plans) {	 
