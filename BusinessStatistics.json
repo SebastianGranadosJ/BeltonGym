@@ -1,10 +1,1 @@
-{
-	"totalSubs": 19,
-	"totalProfits": 2651000.0,
-	"profitCardPayment": 1456000.0,
-	"profitCashPayment": 8000.0,
-	"profitBankTransfer": 8000.0,
-	"timesCardPayment": 6,
-	"timesCashPayment": 1,
-	"timesBankTransfer": 1
-}
+{"totalSubs":24,"totalProfits":2711000.0,"profitCardPayment":1516000.0,"profitCashPayment":8000.0,"profitBankTransfer":8000.0,"timesCardPayment":7,"timesCashPayment":1,"timesBankTransfer":1}

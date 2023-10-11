@@ -17,10 +17,12 @@ public class BusinessStatistics {
 	
 	
 	public BusinessStatistics() {
-		public void incrementTotalUsers() {
-	        totalSubs++;
+	
 	} 
 	//----------------Functions--------------------
+	public void incrementTotalUsers() {
+        totalSubs++;
+	}
 	public void displayPlanAdquisitionStatistics(List<Plan> plans) {	 
         System.out.println("Plan / Cantidad de veces adquirido");
         for (int ii = 0; ii < plans.size(); ii++) {

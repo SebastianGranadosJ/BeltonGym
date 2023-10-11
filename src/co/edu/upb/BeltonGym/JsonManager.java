@@ -17,7 +17,7 @@ public class JsonManager {
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        objectMapper.registerModule(new JavaTimeModule());
 	        objectMapper.writeValue(new File(route), users);
-	        System.out.println("Archivo " + route + " guardado exitosamente.");
+	      
 	    } catch (IOException e) {
 	        System.err.println("Error al escribir el archivo JSON: " + e.getMessage());
 	        e.printStackTrace();
@@ -29,7 +29,7 @@ public class JsonManager {
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        objectMapper.registerModule(new JavaTimeModule());
 	        objectMapper.writeValue(new File(route), stats);
-	        System.out.println("Archivo " + route + " guardado exitosamente.");
+	        
 	    } catch (IOException e) {
 	        System.err.println("Error al escribir el archivo JSON: " + e.getMessage());
 	        e.printStackTrace();
@@ -41,7 +41,7 @@ public class JsonManager {
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        objectMapper.registerModule(new JavaTimeModule());
 	        objectMapper.writeValue(new File(route), plans);
-	        System.out.println("Archivo " + route + " guardado exitosamente.");
+	  
 	    } catch (IOException e) {
 	        System.err.println("Error al escribir el archivo JSON: " + e.getMessage());
 	        e.printStackTrace();
