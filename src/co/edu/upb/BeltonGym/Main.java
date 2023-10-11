@@ -18,8 +18,7 @@ public class Main {
 		String routeUserJson = "Users.json";
 		String routePlanJson = "Plans.json";
 		String routeStatsJson = "BusinessStatistics.json";
-		
-		
+
 		List<User> users = new ArrayList<>();
 		List<Plan> plans = new ArrayList<>();
 		BusinessStatistics statsManager = new BusinessStatistics();
@@ -31,7 +30,7 @@ public class Main {
 		MainPanel mainPanel = new MainPanel();
 		mainPanel.setVisible(true);
 		
-		
+	
 		
 		/*
 	
@@ -68,7 +67,7 @@ public class Main {
 		//writeJsonArrayListPlan(routePlanJson, plans);
 		//writeJsonArrayListUser(routeUserJson, users);
 		//registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
-		updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
+		//updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
         //menuFreezeDueDate(users, routeUserJson);
 		
         //
