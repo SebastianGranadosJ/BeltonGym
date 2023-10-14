@@ -1,9 +1,9 @@
 package co.edu.upb.BeltonGym;
 
-<<<<<<< HEAD
-=======
+
+
 import  co.edu.upb.BeltonGym.GUI.*;
->>>>>>> mybranch
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Scanner;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Main {
 
-<<<<<<< HEAD
+
     public static void main(String[] args) {
     	
         String routeUserJson = "Users.json";
@@ -27,185 +27,14 @@ public class Main {
         List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
         List<Plan> plans = JsonManager.readJsonArrayListPlan(routePlanJson);
         BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
-        
-=======
-	public static void main(String[] args) {
-		String routeUserJson = "Users.json";
-		String routePlanJson = "Plans.json";
-		String routeStatsJson = "BusinessStatistics.json";
 
-		List<User> users = new ArrayList<>();
-		List<Plan> plans = new ArrayList<>();
-		BusinessStatistics statsManager = new BusinessStatistics();
->>>>>>> mybranch
-
-		plans = JsonManager.readJsonArrayListPlan(routePlanJson);
-		users = JsonManager.readJsonArrayListUser(routeUserJson);
-		statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
-		
-<<<<<<< HEAD
-		 Scanner in = new Scanner(System.in);
-         int choice;
-         int other = 1;
-=======
 		MainPanel mainPanel = new MainPanel();
 		mainPanel.setVisible(true);
-		
-	
->>>>>>> mybranch
-		
-	/*
-	
-	        plans.add(new Plan("1 Mes", 60000, "Plan mensual", 0, 1, 0));
-	        plans.add(new Plan("2 Semanas", 35000, "Plan de 2 semanas", 14, 0 , 0));
-	        plans.add(new Plan("1 Semana", 20000, "Plan de 1 semana", 7, 0 , 0));
-	        plans.add(new Plan("1 Dia", 8000, "Plan diario", 1, 0 , 0));
-	        plans.add(new Plan("1 Año", 660000, "Plan anual", 0, 0 , 1));
-       
-				
-		/*
-		users.add( new User("Angelica Rincon", 12, "0002129", "f"));
-		users.get(users.size() - 1).setCurrentPlan(plans.get(0));
-		users.get(users.size() - 1).setStatusPlan(false);
-		users.get(users.size() - 1).setDateLastPayment(LocalDate.of(2002, Month.MARCH, 02));
-		users.get(users.size() - 1).calDueDatePlan();
-		
-		users.add(new User("Samuel de Luque", 39, "10231921", "m"));
-		users.get(users.size() - 1).setCurrentPlan(plans.get(1));
-		users.get(users.size() - 1).setStatusPlan(false);
-		users.get(users.size() - 1).setDateLastPayment(LocalDate.of(2002, Month.MARCH, 02));
-		users.get(users.size() - 1).calDueDatePlan();
-		
-		users.add(new User("Ramon Martinez", 19, "109312821", "m"));
-		users.get(users.size() - 1).setCurrentPlan(plans.get(2));
-		users.get(users.size() - 1).setStatusPlan(false);
-		users.get(users.size() - 1).setDateLastPayment(LocalDate.of(2002, Month.MARCH, 02));
-		users.get(users.size() - 1).calDueDatePlan();
-		
-         */
-        //writeJsonArrayListPlan(routePlanJson, plans);
-        //writeJsonArrayListUser(routeUserJson, users);
-        //registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
-        //updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
-        //menuFreezeDueDate(users, routeUserJson);
-        //
-<<<<<<< HEAD
-=======
-        //System.out.println(stringUsersBasicData(users));
-		//menuUsers(users);
-
-		
-		//statsManager.menuDisplayBusinessData(users, plans);
-		//menuPlans(plans);
-		//banUsers(users,routeUserJson);
-		
-		//addPlan(plans,routePlanJson);
->>>>>>> mybranch
-        //menuUsers(users);
-            System.out.println("Bienvenido a Beltongym: Tu compañero en el camino hacia una vida más saludable y activa.\n\n");
-            while(other==1){
-            	System.out.println("MENU DE FUNCIONALIDADES\n");
-                System.out.println("1. Notificaciones");
-                System.out.println("2. Menú de Usaurios");
-                System.out.println("3. Registrar Usaurio");
-                System.out.println("4. Banear Usaurio");
-                System.out.println("5. Renovar Suscripción");
-                System.out.println("6. Congelar Mensualidad");
-                System.out.println("7. Menú de Planes");
-                System.out.println("8. Añadir Plan");
-                System.out.println("9. Estadísticas del Negocio");
-                System.out.println("10. Menu de historial de usuario");
-                System.out.println("11. Cerrar Programa");
-                
-                choice = in.nextInt();
-                in.nextLine();
-                switch(choice){
-                    case 1:
-                    	System.out.println("---------------NOTIFICACIONES---------------");
-                    	notifyUsertDue(users);
-                    	System.out.println("--------------------------------------------");
-                        break;
-                    case 2:
-                        System.out.println("--------------MENÚ DE USUARIOS--------------");
-                        menuUsers(users);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 3:
-                    	System.out.println("-------------REGISTRAR  USUARIO-------------");
-                        registerUser(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson );
-                        System.out.println("--------------------------------------------");
-                        break;
-
-                    case 4:
-                        System.out.println("---------------BANEAR USUARIO---------------");
-                        banUsers(users,routeUserJson);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 5:
-                        System.out.println("------------RENOVAR  SUSCRIPCIÓN------------");
-                        updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 6:
-                        System.out.println("------------CONGELAR MENSUALIDAD------------");
-                        menuFreezeDueDate(users, routeUserJson);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 7:
-                        System.out.println("---------------MENU DE PLANES---------------");
-                    	Main.menuPlans(plans);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 8:
-                        System.out.println("----------------AGREGAR PLAN----------------");
-                    	addPlan(plans,routePlanJson);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 9:
-                        System.out.println("----------ESTADISTICAS  DE  NEGOCIO---------");
-                        statsManager.menuDisplayBusinessData(users, plans);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 10:
-                        System.out.println("----------MENU HISTORIAL DE USUARIO---------");
-                        menuUserHistory(users);
-                        System.out.println("--------------------------------------------");
-                        break;
-                    case 11:
-                        other=0;
-                        System.out.println("\n\n¡Gracias por utilizar Beltongym! Esperamos haberte ayudado en tu jornada hacia una vida más saludable. ¡Nos vemos pronto en el gimnasio!");
-                        break;
-                    default:
-                    	System.out.println("Ingrese un valor valido");
-                }
-                JsonManager.writeJsonArrayListUser(routeUserJson, users); // Actualizar el archivo JSON con la nueva lista de usuarios
-                statsManager.incrementTotalUsers(); // Incrementar el contador de usuarios en las estadísticas
-                JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager); // Actualizar el archivo JSON de estadísticas
-                System.out.println("Presione enter para continuar");
-                in.nextLine();
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                
-            }
-            if(other != 0) {
-            	in.close();	
-            }
+           
             
         }// MAIN
-<<<<<<< HEAD
-	
-    public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
-        Scanner in = new Scanner(System.in);
-        List<User> oldUsers = new ArrayList<>();
-        int answer;
-        int nmr;
-        int indexUser;
-        Plan selectedPlan;
 
-        for (int ii = 0; ii < users.size(); ii++) {
-            if (users.get(ii).isStatusPlan() == false) {
-                oldUsers.add(users.get(ii));
-            }
-=======
+            
 	public static List<User> listReturnUserInactiveBasicData(List<User> users) {
 		List<User> oldUsers = new ArrayList<>();
 		for (int ii = 0; ii < users.size(); ii++) {
@@ -246,10 +75,10 @@ public class Main {
 				oldUsers.get(indexUser).setStatusPlan(true);
 				oldUsers.get(indexUser).setDateLastPayment(LocalDate.now());
 				oldUsers.get(indexUser).calDueDatePlan();
-				
+				oldUsers.get(indexUser).addToHistory("Ha renovado su suscripción.");
 				stats.plusTotalSubs(1);
 				stats.plusTotalProfits(selectedPlan.getValue());
-				writeJsonBusinessStatistics(routeStats, stats);
+				JsonManager.writeJsonBusinessStatistics(routeStats, stats);
 				
 				
 				System.out.println("Suscripccion Renovada" );
@@ -267,12 +96,11 @@ public class Main {
 				System.out.println("Fecha de ultimo pago: " + oldUsers.get(indexUser).getDateLastPayment());
 				System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
 			}
-			writeJsonArrayListUser(routeUser, users);
-			writeJsonArrayListPlan(routePlan, plans);
+			JsonManager.writeJsonArrayListUser(routeUser, users);
+			JsonManager.writeJsonArrayListPlan(routePlan, plans);
 			
 			
 	}//updateSubs()
-	
 	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
 		
 		if(user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
@@ -308,6 +136,9 @@ public class Main {
 			stringReturn += "Estado del plan: " + users.get(index).statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + users.get(index).getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan()+"\n";
+			stringReturn += "-----Historial de Usuario-----" + "\n";
+			stringReturn += users.get(index).getHistory()+"\n";
+			
 			
 			return stringReturn;
 	 }
@@ -321,6 +152,8 @@ public class Main {
 			stringReturn += "Estado del plan: " + user.statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + user.getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + user.getDueDatePlan()+"\n";
+			stringReturn += "-----Historial de Usuario-----" + "\n";
+			stringReturn += user.getHistory()+"\n";
 			
 			return stringReturn;
 	 }
@@ -375,166 +208,15 @@ public class Main {
 		user.setStatusPlan(true);
 		user.setDateLastPayment(LocalDate.now());
 		user.calDueDatePlan(); 
+		user.addToHistory("Se ha registrado.");
 		
 		users.add(user);
-		writeJsonBusinessStatistics(routeStats, stats);
-		writeJsonArrayListUser(routeUsers, users);
-		writeJsonArrayListPlan(routePlan, plans);
+		JsonManager.writeJsonBusinessStatistics(routeStats, stats);
+		JsonManager.writeJsonArrayListUser(routeUsers, users);
+		JsonManager.writeJsonArrayListPlan(routePlan, plans);
 	}//RegisterUser()
 	
-	public static Plan selectPlan(List<Plan> plans) {
-		Scanner in = new Scanner(System.in);
-		int indexPlan;
-		
-		System.out.println("Seleccione el plan que desea: ");
-		for(int ii = 0; ii < plans.size(); ii++) {
-			System.out.println( ii + 1 + ". " + plans.get(ii).getPlan());
-		}
-		indexPlan = in.nextInt() - 1;
-		in.nextLine();
-		return plans.get(indexPlan);
-	}//SelectPlan()
-	
-	public static void writeJsonArrayListUser(String route, List<User> users) {
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			 objectMapper.registerModule(new JavaTimeModule());
-			objectMapper.writeValue(new File(route), users);
-		} catch (IOException e) {
-            e.printStackTrace();
->>>>>>> mybranch
-        }
-        //System.out.println("Quiere renovar cliente?");
-        System.out.println("Los siguientes son los usuarios con el plan vencido: ");
-        for (int ii = 0; ii < oldUsers.size(); ii++) {
-            nmr = ii + 1;
-            System.out.println(nmr + ". " + oldUsers.get(ii).getName() + " " + oldUsers.get(ii).getId());
-        }
 
-        System.out.println("Ingrese el numero del usuario al que desea Renovar la suscripción: ");
-        indexUser = in.nextInt() - 1;
-        in.nextLine();
-
-        System.out.println("Desea renovar la suscripccion de:  " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId());
-        System.out.println("1. Si 2.No");
-        answer = in.nextInt();
-        in.nextLine();
-
-        if (answer == 1) {
-
-            selectedPlan = selectPlan(plans);
-            registerPayment(selectedPlan, stats, routeStats);
-
-            oldUsers.get(indexUser).setCurrentPlan(selectedPlan);
-            selectedPlan.incrementTotalTimesAdquired();
-
-            oldUsers.get(indexUser).setStatusPlan(true);
-            oldUsers.get(indexUser).setDateLastPayment(LocalDate.now());
-            oldUsers.get(indexUser).calDueDatePlan();
-            oldUsers.get(indexUser).addToHistory("Ha renovado su suscripción.");
-
-            stats.plusTotalSubs(1);
-            stats.plusTotalProfits(selectedPlan.getValue());
-            JsonManager.writeJsonBusinessStatistics(routeStats, stats);
-
-            System.out.println("Suscripccion Renovada");
-            System.out.println();
-
-            System.out.println("Cliente " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId() + " renovado: ");
-            System.out.println();
-
-            System.out.println("Nombre: " + oldUsers.get(indexUser).getName());
-            System.out.println("Edad: " + oldUsers.get(indexUser).getAge());
-            System.out.println("Genero: " + oldUsers.get(indexUser).getGender());
-            System.out.println("Id: " + oldUsers.get(indexUser).getId());
-            System.out.println("Plan actual: " + oldUsers.get(indexUser).getCurrentPlan().getPlan());
-            System.out.println("Estado del plan: " + oldUsers.get(indexUser).statusPlanAsString());
-            System.out.println("Fecha de ultimo pago: " + oldUsers.get(indexUser).getDateLastPayment());
-            System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
-        }
-        JsonManager.writeJsonArrayListUser(routeUser, users);
-        JsonManager.writeJsonArrayListPlan(routePlan, plans);
-
-    }
-
-
-    //updateSubs()
-    public static void notifyUserDue(User user) { //This function checks if clients plan have expired
-
-        if (user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
-            System.out.println(user.getDueDatePlan() + " El plan " + user.getCurrentPlan().getPlan() + " de " + user.getName() + " ha vencido");
-        }
-    }//NotifyUserDue
-
-    public static void notifyUsertDue(List<User> users) {
-        for (int ii = 0; ii < users.size(); ii++) {
-            notifyUserDue(users.get(ii));
-        }
-    }//NotifyUserDue
-
-    public static void menuUsers(List<User> users) {
-        Scanner t = new Scanner(System.in);
-        int index;
-        int nmr = 0;
-        System.out.println("Los siguientes son los usuarios registrados: ");
-        for (int ii = 0; ii < users.size(); ii++) {
-            nmr = ii + 1;
-            System.out.println(nmr + ". " + users.get(ii).getName() + " " + users.get(ii).getId());
-        }
-
-        System.out.println("Ingrese el numero del usuario al que desea ver la informacion: ");
-        index = t.nextInt() - 1;
-        t.nextLine();
-        System.out.println("Nombre: " + users.get(index).getName());
-        System.out.println("Edad: " + users.get(index).getAge());
-        System.out.println("Genero: " + users.get(index).getGender());
-        System.out.println("Id: " + users.get(index).getId());
-        System.out.println("Plan actual: " + users.get(index).getCurrentPlan().getPlan());
-        System.out.println("Estado del plan: " + users.get(index).statusPlanAsString());
-        System.out.println("Fecha de ultimo pago: " + users.get(index).getDateLastPayment());
-        System.out.println("Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan());
-    }//MenuUsers()
-
-    public static void registerUser(List<User> users, List<Plan> plans, String routeUsers, BusinessStatistics stats, String routeStats, String routePlan) {
-        Scanner cc = new Scanner(System.in);
-
-        String name;
-        int age;
-        String id;
-        String gender;
-        Plan currentPlan;
-
-        System.out.println("Ingrese nombre del usuario: ");
-        name = cc.nextLine();
-        System.out.println("Ingrese edad del usuario: ");
-        age = cc.nextInt();
-        cc.nextLine();
-        System.out.println("Ingrese documento de identidad del usuario: ");
-        id = cc.nextLine();
-        System.out.println("Ingrese genero del usuario: ");
-        gender = cc.nextLine();
-        System.out.println("Ingrese el plan que va a adquirir el usuario: ");
-        currentPlan = selectPlan(plans);
-        registerPayment(currentPlan, stats, routeStats);
-
-        User user = new User(name, age, id, gender);
-        user.addToHistory("Se ha registrado.");
-
-        stats.plusTotalSubs(1);
-        stats.plusTotalProfits(currentPlan.getValue());
-        JsonManager.writeJsonBusinessStatistics(routeStats, stats);
-
-        user.setCurrentPlan(currentPlan);
-        currentPlan.incrementTotalTimesAdquired();
-        user.setStatusPlan(true);
-        user.setDateLastPayment(LocalDate.now());
-        user.calDueDatePlan();
-        user.addToHistory("Se ha registrado.");
-
-        users.add(user);
-        JsonManager.writeJsonArrayListUser(routeUsers, users);
-        JsonManager.writeJsonArrayListPlan(routePlan, plans);
-    }//RegisterUser()
     public static Plan selectPlan(List<Plan> plans) {
         Scanner in = new Scanner(System.in);
 
@@ -743,5 +425,6 @@ public class Main {
         System.out.println("Selección de usuario no válida.");
     }
 }
-
 }
+   
+

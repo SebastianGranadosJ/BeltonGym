@@ -13,7 +13,7 @@ public class User {
     private LocalDate dateLastPayment;
     private LocalDate dueDatePlan;
     private boolean banned = false;
-    private String history;
+    private String history = "";
 
     public User() {
 

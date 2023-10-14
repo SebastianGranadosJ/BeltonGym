@@ -31,7 +31,7 @@ public class MenuUsersPanel extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private String routeUserJson = "Users.json";
-	private List <User> users =Main.readJsonArrayListUser(routeUserJson);
+	private List <User> users =JsonManager.readJsonArrayListUser(routeUserJson);
 	/**
 	 * Launch the application.
 	 */

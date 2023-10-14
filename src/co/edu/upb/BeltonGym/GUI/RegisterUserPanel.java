@@ -37,9 +37,9 @@ public class RegisterUserPanel extends JFrame {
 	private String routeStatsJson = "BusinessStatistics.json";
 	
 	
-	private List<User> users = Main.readJsonArrayListUser(routeUserJson);
-	private List<Plan> plans =  Main.readJsonArrayListPlan(routePlanJson);
-	private BusinessStatistics statsManager = Main.readJsonBusinessStatistics(routeStatsJson);
+	private List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
+	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
+	private BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 	private String payment = "";
 	private String planString = "";
 	
@@ -159,10 +159,10 @@ public class RegisterUserPanel extends JFrame {
 					}
 					
 					users.add(user);
-					
-					Main.writeJsonBusinessStatistics(routeStatsJson, statsManager);
-					Main.writeJsonArrayListUser(routeUserJson, users);
-					Main.writeJsonArrayListPlan(routePlanJson, plans);
+					user.addToHistory("Se ha registrado con el plan: " + user.getCurrentPlan().getPlan());
+					JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager);
+					JsonManager.writeJsonArrayListUser(routeUserJson, users);
+					JsonManager.writeJsonArrayListPlan(routePlanJson, plans);
 					
 
 		                textPaneRegister.setText("");
@@ -173,7 +173,7 @@ public class RegisterUserPanel extends JFrame {
 								 "Plan: " + planString +"\n"+
 								 "Metodo de pago: " + payment +"\n" + "USUARIO EXITOSAMENTE REGISTRADO"+ "\n";
 					
-					
+			           	
 			           	textPaneRegister.setText(txtRegister);
 			           	user.setName("");
 			    		user.setAge(0);

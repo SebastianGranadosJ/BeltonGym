@@ -25,10 +25,10 @@ public class UpdateSubsPanel extends JFrame {
 	private String routePlanJson = "Plans.json";
 	private String routeStatsJson = "BusinessStatistics.json";
 	
-	private List<User> users = Main.readJsonArrayListUser(routeUserJson);
+	private List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
 	private List<User> inactiveUsers = Main.listReturnUserInactiveBasicData(users);
-	private List<Plan> plans =  Main.readJsonArrayListPlan(routePlanJson);
-	private BusinessStatistics statsManager = Main.readJsonBusinessStatistics(routeStatsJson);
+	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
+	private BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 	private String payment = "";
 	private String planString = "";
 	private String message = "";
@@ -293,7 +293,7 @@ public class UpdateSubsPanel extends JFrame {
 					selectedUser.getCurrentPlan().incrementTotalTimesAdquired();
 					selectedUser.setDateLastPayment(LocalDate.now());
 					selectedUser.calDueDatePlan(); 
-					
+					selectedUser.addToHistory("Ha renovado con el plan: "+ selectedPlan.getPlan());
 					statsManager.plusTotalSubs(1);
 					statsManager.plusTotalProfits(selectedUser.getCurrentPlan().getValue());
 				
@@ -310,9 +310,9 @@ public class UpdateSubsPanel extends JFrame {
 						statsManager.plusTimesBankTransfer(1);
 					}
 					
-					Main.writeJsonBusinessStatistics(routeStatsJson, statsManager);
-					Main.writeJsonArrayListUser(routeUserJson, users);
-					Main.writeJsonArrayListPlan(routePlanJson, plans);
+					JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager);
+					JsonManager.writeJsonArrayListUser(routeUserJson, users);
+					JsonManager.writeJsonArrayListPlan(routePlanJson, plans);
 					
 					 String txtRegister ="SUSCRIPCIÓN EXITOSAMENTE RENOVADA " + "\n "+ 
 							 "Nombre: " + selectedUser.getName() +"\n" +
