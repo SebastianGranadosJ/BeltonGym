@@ -1,3 +1,5 @@
 Plans.json
 Users.json
 BusinessStatistics.json
+/target/
+*.classpath
