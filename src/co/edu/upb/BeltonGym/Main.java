@@ -1,5 +1,9 @@
 package co.edu.upb.BeltonGym;
 
+<<<<<<< HEAD
+=======
+import  co.edu.upb.BeltonGym.GUI.*;
+>>>>>>> mybranch
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Scanner;
@@ -13,6 +17,7 @@ import java.util.List;
 
 public class Main {
 
+<<<<<<< HEAD
     public static void main(String[] args) {
     	
         String routeUserJson = "Users.json";
@@ -23,14 +28,31 @@ public class Main {
         List<Plan> plans = JsonManager.readJsonArrayListPlan(routePlanJson);
         BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
         
+=======
+	public static void main(String[] args) {
+		String routeUserJson = "Users.json";
+		String routePlanJson = "Plans.json";
+		String routeStatsJson = "BusinessStatistics.json";
+
+		List<User> users = new ArrayList<>();
+		List<Plan> plans = new ArrayList<>();
+		BusinessStatistics statsManager = new BusinessStatistics();
+>>>>>>> mybranch
 
 		plans = JsonManager.readJsonArrayListPlan(routePlanJson);
 		users = JsonManager.readJsonArrayListUser(routeUserJson);
 		statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 		
+<<<<<<< HEAD
 		 Scanner in = new Scanner(System.in);
          int choice;
          int other = 1;
+=======
+		MainPanel mainPanel = new MainPanel();
+		mainPanel.setVisible(true);
+		
+	
+>>>>>>> mybranch
 		
 	/*
 	
@@ -67,6 +89,18 @@ public class Main {
         //updateSubs(users, plans, routeUserJson, statsManager, routeStatsJson, routePlanJson);
         //menuFreezeDueDate(users, routeUserJson);
         //
+<<<<<<< HEAD
+=======
+        //System.out.println(stringUsersBasicData(users));
+		//menuUsers(users);
+
+		
+		//statsManager.menuDisplayBusinessData(users, plans);
+		//menuPlans(plans);
+		//banUsers(users,routeUserJson);
+		
+		//addPlan(plans,routePlanJson);
+>>>>>>> mybranch
         //menuUsers(users);
             System.out.println("Bienvenido a Beltongym: Tu compañero en el camino hacia una vida más saludable y activa.\n\n");
             while(other==1){
@@ -157,6 +191,7 @@ public class Main {
             }
             
         }// MAIN
+<<<<<<< HEAD
 	
     public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
         Scanner in = new Scanner(System.in);
@@ -170,6 +205,204 @@ public class Main {
             if (users.get(ii).isStatusPlan() == false) {
                 oldUsers.add(users.get(ii));
             }
+=======
+	public static List<User> listReturnUserInactiveBasicData(List<User> users) {
+		List<User> oldUsers = new ArrayList<>();
+		for (int ii = 0; ii < users.size(); ii++) {
+			if (users.get(ii).isStatusPlan() == false) {
+				oldUsers.add(users.get(ii));
+				}
+		}
+		return oldUsers;
+	}
+	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
+		Scanner in = new Scanner(System.in);
+		List<User> oldUsers = listReturnUserInactiveBasicData(users);
+		int answer;
+
+		int indexUser;
+		Plan selectedPlan;
+			System.out.println("Usuario que su plan vencido: ");
+			System.out.println(stringUsersBasicData(oldUsers));
+			System.out.println("Ingrese el numero del usuario al que desea Renovar la suscripción: ");
+			indexUser = in.nextInt() - 1;
+			in.nextLine();
+			
+			System.out.println("Desea renovar la suscripccion de:  " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId());
+			System.out.println("1. Si 2.No" );
+			answer = in.nextInt();
+			in.nextLine();
+			
+			
+			
+			if(answer == 1) {
+				
+				selectedPlan = selectPlan(plans);
+				registerPayment(selectedPlan, stats, routeStats);
+				
+				oldUsers.get(indexUser).setCurrentPlan(selectedPlan);
+				selectedPlan.incrementTotalTimesAdquired();
+				
+				oldUsers.get(indexUser).setStatusPlan(true);
+				oldUsers.get(indexUser).setDateLastPayment(LocalDate.now());
+				oldUsers.get(indexUser).calDueDatePlan();
+				
+				stats.plusTotalSubs(1);
+				stats.plusTotalProfits(selectedPlan.getValue());
+				writeJsonBusinessStatistics(routeStats, stats);
+				
+				
+				System.out.println("Suscripccion Renovada" );
+				System.out.println();
+				
+				System.out.println("Cliente " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId() + " renovado: ");
+				System.out.println();
+				
+				System.out.println("Nombre: " + oldUsers.get(indexUser).getName());
+				System.out.println("Edad: " + oldUsers.get(indexUser).getAge());
+				System.out.println("Genero: " + oldUsers.get(indexUser).getGender());
+				System.out.println("Id: " + oldUsers.get(indexUser).getId());
+				System.out.println("Plan actual: " + oldUsers.get(indexUser).getCurrentPlan().getPlan());
+				System.out.println("Estado del plan: " + oldUsers.get(indexUser).statusPlanAsString());
+				System.out.println("Fecha de ultimo pago: " + oldUsers.get(indexUser).getDateLastPayment());
+				System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
+			}
+			writeJsonArrayListUser(routeUser, users);
+			writeJsonArrayListPlan(routePlan, plans);
+			
+			
+	}//updateSubs()
+	
+	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
+		
+		if(user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
+			System.out.println(user.getDueDatePlan() + " El plan " + user.getCurrentPlan() + " de " + user.getName() + " ha vencido");
+		}
+	}//NotifyUserDue
+
+	public static void notifyUsertDue(List<User> users) {
+		for(int ii = 0; ii < users.size(); ii++) {
+			notifyUserDue(users.get(ii));
+		}
+	}//NotifyUserDue
+	 public static String stringUsersBasicData(List<User> users) {
+		 String usersBasicData = "";
+		 int nmr = 0;
+		 
+		 for(int ii = 0; ii < users.size(); ii++) {
+				nmr = ii + 1;
+				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() +"\n";
+			}
+		 
+		 return usersBasicData;
+	 }
+	 public static String stringReturnUserData(List<User> users, int ii) { //This method return user's data as String
+		 	String stringReturn = "";
+			int index = ii - 1;
+			
+			stringReturn += "Nombre: " + users.get(index).getName() +"\n";
+			stringReturn += "Edad: " + users.get(index).getAge() + "\n";
+			stringReturn += "Genero: " + users.get(index).getGender()+"\n";
+			stringReturn += "Id: " + users.get(index).getId()+"\n";
+			stringReturn += "Plan actual: " + users.get(index).getCurrentPlan().getPlan()+"\n";
+			stringReturn += "Estado del plan: " + users.get(index).statusPlanAsString()+"\n";
+			stringReturn += "Fecha de ultimo pago: " + users.get(index).getDateLastPayment()+"\n";
+			stringReturn += "Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan()+"\n";
+			
+			return stringReturn;
+	 }
+	 public static String stringReturnUserData(User user) { //This method return user's data as String
+		 	String stringReturn = "";			
+			stringReturn += "Nombre: " + user.getName() +"\n";
+			stringReturn += "Edad: " + user.getAge() + "\n";
+			stringReturn += "Genero: " + user.getGender()+"\n";
+			stringReturn += "Id: " + user.getId()+"\n";
+			stringReturn += "Plan actual: " + user.getCurrentPlan().getPlan()+"\n";
+			stringReturn += "Estado del plan: " + user.statusPlanAsString()+"\n";
+			stringReturn += "Fecha de ultimo pago: " + user.getDateLastPayment()+"\n";
+			stringReturn += "Fecha de vencimiento del plan: " + user.getDueDatePlan()+"\n";
+			
+			return stringReturn;
+	 }
+	public static void menuUsers(List<User> users) {
+		
+		int index;
+		int nmr = 0;
+		System.out.println("Los siguientes son los usuarios registrados: ");
+		 
+		System.out.println(stringUsersBasicData(users));
+		Scanner t =   new Scanner(System.in); 
+		System.out.println("Ingrese numero de usuario que desea seleccionar ");
+		index = t.nextInt();
+		t.nextLine();
+		System.out.println(stringReturnUserData(users, index));
+		
+
+		
+	}//MenuUsers()
+	
+	public static void registerUser(List<User> users, List<Plan> plans, String routeUsers, BusinessStatistics stats, String routeStats, String routePlan) {
+		Scanner cc = new Scanner(System.in); 
+		
+		String name;
+		int age;
+		String id;
+		String gender;
+		Plan currentPlan;
+		
+		
+		System.out.println("Ingrese nombre del usuario: ");
+		name = cc.nextLine();
+		System.out.println("Ingrese edad del usuario: ");
+		age = cc.nextInt();
+		cc.nextLine();
+		System.out.println("Ingrese documento de identidad del usuario: ");
+		id = cc.nextLine();
+		System.out.println("Ingrese genero del usuario: ");
+		gender = cc.nextLine();
+		System.out.println("Ingrese el plan que va a adquirir el usuario: ");
+		currentPlan = selectPlan(plans);
+		registerPayment(currentPlan, stats, routeStats);
+		
+		User user = new User(name,age, id, gender);
+		
+		stats.plusTotalSubs(1);
+		stats.plusTotalProfits(currentPlan.getValue());
+		
+		
+		user.setCurrentPlan(currentPlan);
+		currentPlan.incrementTotalTimesAdquired();
+		user.setStatusPlan(true);
+		user.setDateLastPayment(LocalDate.now());
+		user.calDueDatePlan(); 
+		
+		users.add(user);
+		writeJsonBusinessStatistics(routeStats, stats);
+		writeJsonArrayListUser(routeUsers, users);
+		writeJsonArrayListPlan(routePlan, plans);
+	}//RegisterUser()
+	
+	public static Plan selectPlan(List<Plan> plans) {
+		Scanner in = new Scanner(System.in);
+		int indexPlan;
+		
+		System.out.println("Seleccione el plan que desea: ");
+		for(int ii = 0; ii < plans.size(); ii++) {
+			System.out.println( ii + 1 + ". " + plans.get(ii).getPlan());
+		}
+		indexPlan = in.nextInt() - 1;
+		in.nextLine();
+		return plans.get(indexPlan);
+	}//SelectPlan()
+	
+	public static void writeJsonArrayListUser(String route, List<User> users) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			 objectMapper.registerModule(new JavaTimeModule());
+			objectMapper.writeValue(new File(route), users);
+		} catch (IOException e) {
+            e.printStackTrace();
+>>>>>>> mybranch
         }
         //System.out.println("Quiere renovar cliente?");
         System.out.println("Los siguientes son los usuarios con el plan vencido: ");
