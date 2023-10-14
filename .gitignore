@@ -3,3 +3,4 @@ Users.json
 BusinessStatistics.json
 /target/
 *.classpath
+/bin/
