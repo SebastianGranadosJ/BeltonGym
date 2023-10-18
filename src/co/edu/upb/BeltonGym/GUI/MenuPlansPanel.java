@@ -31,7 +31,10 @@ public class MenuPlansPanel extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private String routeUserJson = "Users.json";
+	private String routePlanJson = "Plans.json";
 	private List <User> users =JsonManager.readJsonArrayListUser(routeUserJson);
+	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
+	private String plansBasicData = Main.stringPlanBasicData(plans);
 	/**
 	 * Launch the application.
 	 */
@@ -84,7 +87,7 @@ public class MenuPlansPanel extends JFrame {
 		});
 		panelBanner.add(btnNewButton, BorderLayout.WEST);
 		
-		JLabel lblNewLabel = new JLabel("Menú de Usuarios");
+		JLabel lblNewLabel = new JLabel("Menú de Planes");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panelBanner.add(lblNewLabel, BorderLayout.CENTER);
@@ -111,7 +114,7 @@ public class MenuPlansPanel extends JFrame {
 		
 		
 		
-		JLabel lblNewLabel_1 = new JLabel("Numero de Usuario:");
+		JLabel lblNewLabel_1 = new JLabel("Numero de Plan:");
 		panelSelectUser.add(lblNewLabel_1, BorderLayout.WEST);
 		
 		JPanel panelTopData = new JPanel();
@@ -119,14 +122,14 @@ public class MenuPlansPanel extends JFrame {
 		panelUsers.add(panelTopData, BorderLayout.NORTH);
 		panelTopData.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_2 = new JLabel("# de Usuario");
+		JLabel lblNewLabel_2 = new JLabel("# de Plan");
 		panelTopData.add(lblNewLabel_2, BorderLayout.WEST);
 		
 		JLabel lblNewLabel_3 = new JLabel("Nombre ");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTopData.add(lblNewLabel_3, BorderLayout.CENTER);
 		
-		JLabel lblNewLabel_4 = new JLabel("ID                 ");
+		JLabel lblNewLabel_4 = new JLabel("Valor                 ");
 		panelTopData.add(lblNewLabel_4, BorderLayout.EAST);
 		
 		//User Basic Data
@@ -139,10 +142,11 @@ public class MenuPlansPanel extends JFrame {
 		panelUsersBasicData.add(scrollPane, BorderLayout.CENTER);
 		
 		JTextPane textPaneUserBasicData = new JTextPane();
+		textPaneUserBasicData.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		String usersBasicData = Main.stringUsersBasicData(users);
 	
-		textPaneUserBasicData.setText(usersBasicData);
+		textPaneUserBasicData.setText(plansBasicData);
 		textPaneUserBasicData.setEditable(false);
 		scrollPane.setViewportView(textPaneUserBasicData);
 		
@@ -183,8 +187,8 @@ public class MenuPlansPanel extends JFrame {
 	            public void actionPerformed(ActionEvent e) {
 	                // Obtener el texto ingresado por el usuario
 	                String input = textField.getText();
-	                int inputInt = Integer.parseInt(input);
-	                textPaneInfo.setText(Main.stringReturnUserData(users, inputInt));
+	                int inputInt = Integer.parseInt(input) - 1;
+	                textPaneInfo.setText(Main.stringPlanData(plans, inputInt));
 	               
 	            }
 	        });

@@ -89,6 +89,13 @@ public class MainPanel extends JFrame {
 		panelLeft.add(btnUpdateSubs);
 		
 		JButton btnMenuPlans = new JButton("Menú de Planes");
+		btnMenuPlans.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPlansPanel menuPlansPanel = new MenuPlansPanel();
+				menuPlansPanel.setVisible(true);
+				dispose();
+			}
+		});
 		panelLeft.add(btnMenuPlans);
 		
 		JButton btnBanUser = new JButton("Banear Usuario");

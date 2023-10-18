@@ -125,6 +125,30 @@ public class Main {
 			notifyUserDue(users.get(ii));
 		}
 	}//NotifyUserDue
+	
+	public static String stringPlanBasicData(List<Plan> plans) {
+		String planData = "";
+		int nmr;
+		for(int ii = 0; ii < plans.size(); ii++) {
+			nmr = ii + 1;
+			planData +=  nmr + ".      " + plans.get(ii).getPlan() +  "      	"  + plans.get(ii).getValue() + "\n";
+		}
+		
+		return planData;
+	}
+	public static String stringPlanData(List<Plan> plans, int ii) {
+		Plan plan = plans.get(ii);
+		String planData = "";
+		planData += "Plan #" + (ii + 1) + "\n";
+		planData += "Nombre: " + plan.getPlan() +"\n";
+		planData += "Descripción: " + plan.getDescription() +"\n";
+		planData += "Valor: " + plan.getValue() + "\n";
+		planData += "Duración: " + plan.getDurationYear() + " años con "
+                + plan.getDurationMonth() + " meses y "
+                + plan.getDurationDay() + " días" + "\n";
+	
+		return planData;
+	}
 	 public static String stringUsersBasicData(List<User> users) {
 		 String usersBasicData = "";
 		 int nmr = 0;
