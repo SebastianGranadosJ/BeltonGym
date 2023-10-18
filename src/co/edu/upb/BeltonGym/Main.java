@@ -34,8 +34,10 @@ public class Main {
             
         }// MAIN
 
-            
-	public static List<User> listReturnUserInactiveBasicData(List<User> users) {
+           
+    
+    
+	public static List<User> listReturnUserInactive(List<User> users) {
 		List<User> oldUsers = new ArrayList<>();
 		for (int ii = 0; ii < users.size(); ii++) {
 			if (users.get(ii).isStatusPlan() == false) {
@@ -44,9 +46,19 @@ public class Main {
 		}
 		return oldUsers;
 	}
+	public static List<User> listReturnUserActive(List<User> users) {
+		List<User> activeUsers = new ArrayList<>();
+		for (int ii = 0; ii < users.size(); ii++) {
+			if (users.get(ii).isStatusPlan() == true) {
+				activeUsers.add(users.get(ii));
+				}
+		}
+		return activeUsers;
+	}
+	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
 		Scanner in = new Scanner(System.in);
-		List<User> oldUsers = listReturnUserInactiveBasicData(users);
+		List<User> oldUsers = listReturnUserInactive(users);
 		int answer;
 
 		int indexUser;
@@ -120,6 +132,17 @@ public class Main {
 		 for(int ii = 0; ii < users.size(); ii++) {
 				nmr = ii + 1;
 				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() +"\n";
+			}
+		 
+		 return usersBasicData;
+	 }
+	 public static String stringUsersBasicDataWithDue(List<User> users) {
+		 String usersBasicData = "";
+		 int nmr = 0;
+		 
+		 for(int ii = 0; ii < users.size(); ii++) {
+				nmr = ii + 1;
+				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() + "      " + users.get(ii).getDueDatePlan() +"\n";
 			}
 		 
 		 return usersBasicData;

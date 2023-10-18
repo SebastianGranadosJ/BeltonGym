@@ -41,18 +41,16 @@ public class RegisterUserPanel extends JFrame {
 	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
 	private BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 	private String payment = "";
+	private String gender = "";
 	private String planString = "";
+	private Plan planUser = null;
+	private String message = "Esperando datos.";
+	private boolean allFields;
 	
 
 	public RegisterUserPanel() {
 	
 		//Attributes new User
-		User user = new User();
-		user.setName("");
-		user.setAge(0);
-		user.setId("");
-		user.setGender("");
-		user.setCurrentPlan(null);
 	
 		
 		
@@ -73,7 +71,7 @@ public class RegisterUserPanel extends JFrame {
 		JPanel panelBanner = new JPanel();
 		contentPane.add(panelBanner, BorderLayout.NORTH);
 		panelBanner.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelBanner.setLayout(new BorderLayout(0, 0));
+		panelBanner.setLayout(new BorderLayout(0, 20));
 		
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -92,120 +90,25 @@ public class RegisterUserPanel extends JFrame {
 		
 		JPanel panelFunctions = new JPanel();
 		contentPane.add(panelFunctions, BorderLayout.CENTER);
-		panelFunctions.setLayout(new GridLayout(1, 0, 0, 0));
+		panelFunctions.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelTitle = new JPanel();
-		panelTitle.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.add(panelTitle, BorderLayout.NORTH);
-		panelTitle.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_1 = new JLabel("Asegurese de presionar enter tras ingresar un dato");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		panelTitle.add(lblNewLabel_1);
-		
 		JPanel panelData = new JPanel();
-		panel.add(panelData, BorderLayout.CENTER);
+		panel.add(panelData);
+		
 		panelData.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelRegister = new JPanel();
-		panelData.add(panelRegister, BorderLayout.SOUTH);
-		JTextPane textPaneRegister = new JTextPane();
-		textPaneRegister.setEditable(false);
-		String txtRegister;
-		txtRegister = "Nombre: " + user.getName() +"\n" +
-					 "Edad: "+ user.getAge() + "\n" +
-					 "Documento de Identidad: " + user.getId() + "\n"+
-					 "Genero: " + user.getGender() + "\n"+ 
-					 "Plan: " + planString +"\n"+
-					 "Metodo de pago: " + payment +"\n";
-		
-		
-		textPaneRegister.setText(txtRegister);
-		
-		JButton btnNewButton_1 = new JButton("Registrar");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			
-				if((user.getName() != "" )&&( user.getAge()	!= 0 )&&( user.getGender() != "" )&& (user.getId() != "") && (user.getCurrentPlan() != null) && (payment != "")) {
-			
-					
-					statsManager.plusTotalSubs(1);
-					statsManager.plusTotalProfits(user.getCurrentPlan().getValue());
-				
-				
-					user.getCurrentPlan().incrementTotalTimesAdquired();
-					user.setStatusPlan(true);
-					user.setDateLastPayment(LocalDate.now());
-					user.calDueDatePlan(); 
-					
-					
-					if(payment == "Tarjeta") {
-						statsManager.plusProfitCardPayment(user.getCurrentPlan().getValue());
-						statsManager.plusTimesCardPayment(1);
-					}
-					if(payment == "Efectivo") {
-						statsManager.plusProfitCashPayment(user.getCurrentPlan().getValue());
-						statsManager.plusTimesCashPayment(1);
-					}
-					if(payment == "Transferencia Bancaria") {
-						statsManager.plusProfitBankTransfer(user.getCurrentPlan().getValue());
-						statsManager.plusTimesBankTransfer(1);
-					}
-					
-					users.add(user);
-					user.addToHistory("Se ha registrado con el plan: " + user.getCurrentPlan().getPlan());
-					JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager);
-					JsonManager.writeJsonArrayListUser(routeUserJson, users);
-					JsonManager.writeJsonArrayListPlan(routePlanJson, plans);
-					
-
-		                textPaneRegister.setText("");
-			           	 String txtRegister = "Nombre: " + user.getName() +"\n" +
-								 "Edad: "+ user.getAge() + "\n" +
-								 "Documento de Identidad: " + user.getId() + "\n"+
-								 "Genero: " + user.getGender() + "\n"+ 
-								 "Plan: " + planString +"\n"+
-								 "Metodo de pago: " + payment +"\n" + "USUARIO EXITOSAMENTE REGISTRADO"+ "\n";
-					
-			           	
-			           	textPaneRegister.setText(txtRegister);
-			           	user.setName("");
-			    		user.setAge(0);
-			    		user.setId("");
-			    		user.setGender("");
-			    		user.setCurrentPlan(null);
-			    		planString = "";
-			    		payment = "";
-		             
-				}else {
-				  textPaneRegister.setText("");
-		           	 String txtRegister = "Nombre: " + user.getName() +"\n" +
-							 "Edad: "+ user.getAge() + "\n" +
-							 "Documento de Identidad: " + user.getId() + "\n"+
-							 "Genero: " + user.getGender() + "\n"+ 
-							 "Plan: " + planString +"\n"+
-							 "Metodo de pago: " + payment +"\n" + "NO FUE POSIBLE HACER EL REGISTRO"+ "\n";
-				
-				
-		           	textPaneRegister.setText(txtRegister);
-				}
-			}
-		});
-		panelRegister.add(btnNewButton_1);
-		
 		JPanel panelImputs = new JPanel();
-		panelData.add(panelImputs, BorderLayout.CENTER);
-		panelImputs.setLayout(new GridLayout(1, 0, 0, 0));
+		panelData.add(panelImputs);
+		panelImputs.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelAttribute = new JPanel();
 		panelAttribute.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelImputs.add(panelAttribute);
+		panelImputs.add(panelAttribute, BorderLayout.WEST);
 		panelAttribute.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panelName = new JPanel();
@@ -278,32 +181,12 @@ public class RegisterUserPanel extends JFrame {
 		panelImput.add(panelNameInput);
 		panelNameInput.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		panelFunctions.add(scrollPane);
-		
-
-		scrollPane.setViewportView(textPaneRegister);
-		
 		
 		textFieldName = new JTextField();
+		textFieldName.setText("");
+		textFieldName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelNameInput.add(textFieldName, BorderLayout.CENTER);
 		textFieldName.setColumns(10);
-		textFieldName.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                // Obtener el texto ingresado por el usuario
-	               user.setName(textFieldName.getText());
-	               textPaneRegister.setText("");
-	           	String txtRegister = "Nombre: " + user.getName() +"\n" +
-						 "Edad: "+ user.getAge() + "\n" +
-						 "Documento de Identidad: " + user.getId() + "\n"+
-						 "Genero: " + user.getGender() + "\n"+ 
-						 "Plan: " + planString +"\n"+
-						 "Metodo de pago: " + payment +"\n";
-			
-			
-	           	textPaneRegister.setText(txtRegister);
-	            }
-	        });
 		
 		JPanel panelAgeInput = new JPanel();
 		panelAgeInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -311,27 +194,10 @@ public class RegisterUserPanel extends JFrame {
 		panelAgeInput.setLayout(new BorderLayout(0, 0));
 		
 		textFieldAge = new JTextField();
+		textFieldAge.setText("");
+		textFieldAge.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAgeInput.add(textFieldAge, BorderLayout.CENTER);
 		textFieldAge.setColumns(10);
-		textFieldAge.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                // Obtener el texto ingresado por el usuario
-	                String input = textFieldAge.getText();
-	                int inputInt = Integer.parseInt(input);
-	                user.setAge(inputInt);
-	                textPaneRegister.setText("");
-		           	String txtRegister = "Nombre: " + user.getName() +"\n" +
-							 "Edad: "+ user.getAge() + "\n" +
-							 "Documento de Identidad: " + user.getId() + "\n"+
-							 "Genero: " + user.getGender() + "\n"+ 
-							 "Plan: " + planString +"\n"+
-							 "Metodo de pago: " + payment +"\n";
-				
-				
-		           	textPaneRegister.setText(txtRegister);
-	               
-	            }
-	        });
 		
 		JPanel panelIdInput = new JPanel();
 		panelIdInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -339,51 +205,25 @@ public class RegisterUserPanel extends JFrame {
 		panelIdInput.setLayout(new BorderLayout(0, 0));
 		
 		textFieldId = new JTextField();
+		textFieldId.setText("");
+		textFieldId.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelIdInput.add(textFieldId, BorderLayout.CENTER);
 		textFieldId.setColumns(10);
-		textFieldId.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Obtener el texto ingresado por el usuario
-                String input = textFieldId.getText();
-                user.setId(input);
-                textPaneRegister.setText("");
-	           	String txtRegister = "Nombre: " + user.getName() +"\n" +
-						 "Edad: "+ user.getAge() + "\n" +
-						 "Documento de Identidad: " + user.getId() + "\n"+
-						 "Genero: " + user.getGender() + "\n"+ 
-						 "Plan: " + planString +"\n"+
-						 "Metodo de pago: " + payment +"\n";
-			
-			
-	           	textPaneRegister.setText(txtRegister);
-               
-            }
-        });
+	
 		JPanel panelGenderInput = new JPanel();
 		panelGenderInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelImput.add(panelGenderInput);
 		panelGenderInput.setLayout(new BorderLayout(0, 0));
 		
 		JComboBox comboBoxGender = new JComboBox();
+		comboBoxGender.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBoxGender.setToolTipText("Seleccione");
 		comboBoxGender.setModel(new DefaultComboBoxModel(new String[] {"", "Masculino", "Femenino"}));
 		comboBoxGender.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Obtiene la opción seleccionada del ComboBox
-                String gender = comboBoxGender.getSelectedItem().toString();
-                user.setGender(gender);
-   
-                textPaneRegister.setText("");
-	           	String txtRegister = "Nombre: " + user.getName() +"\n" +
-						 "Edad: "+ user.getAge() + "\n" +
-						 "Documento de Identidad: " + user.getId() + "\n"+
-						 "Genero: " + user.getGender() + "\n"+ 
-						 "Plan: " + planString +"\n"+
-						 "Metodo de pago: " + payment +"\n";
-			
-			
-	           	textPaneRegister.setText(txtRegister);
+                 gender = comboBoxGender.getSelectedItem().toString();
             }
         });
 		
@@ -395,6 +235,7 @@ public class RegisterUserPanel extends JFrame {
 		panelPlanInput.setLayout(new BorderLayout(0, 0));
 		
 		JComboBox<String> comboBoxPlan = new JComboBox<>();
+		comboBoxPlan.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBoxPlan.setMaximumRowCount(30);
 		comboBoxPlan.setToolTipText("");
 		panelPlanInput.add(comboBoxPlan, BorderLayout.CENTER);
@@ -414,19 +255,10 @@ public class RegisterUserPanel extends JFrame {
                 planString = comboBoxPlan.getSelectedItem().toString();
                 for(int ii = 0; ii <plans.size(); ii++) {
                 	if (plans.get(ii).getPlan() == planString) {
-                		
-                		user.setCurrentPlan(plans.get(ii));
-                		textPaneRegister.setText("");
-        	           	String txtRegister = "Nombre: " + user.getName() +"\n" +
-        						 "Edad: "+ user.getAge() + "\n" +
-        						 "Documento de Identidad: " + user.getId() + "\n"+
-        						 "Genero: " + user.getGender() + "\n"+ 
-        						 "Plan: " + planString +"\n"+
-        						 "Metodo de pago: " + payment +"\n";
-        			
-        			
-        	           	textPaneRegister.setText(txtRegister);
+                		planUser = plans.get(ii);
+                	
                 	}
+                
                 }
             }
         });
@@ -435,31 +267,144 @@ public class RegisterUserPanel extends JFrame {
 		
 		
         JPanel panelPaymentInput = new JPanel();
+        panelPaymentInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panelImput.add(panelPaymentInput);
         panelPaymentInput.setLayout(new BorderLayout(0, 0));
         
         JComboBox comboBoxPayment = new JComboBox();
+        comboBoxPayment.setFont(new Font("Tahoma", Font.PLAIN, 14));
         comboBoxPayment.setModel(new DefaultComboBoxModel(new String[] {"", "Efectivo", "Tarjeta", "Transferencia Bancaria"}));
         panelPaymentInput.add(comboBoxPayment, BorderLayout.CENTER);
+        
+        JPanel panelMessages = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panelMessages.getLayout();
+        flowLayout.setVgap(10);
+        panel.add(panelMessages, BorderLayout.SOUTH);
+        
+        JLabel labelMessages = new JLabel(message);
+        panelMessages.add(labelMessages);
+        
+        JPanel panel_2 = new JPanel();
+        FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
+        flowLayout_1.setVgap(12);
+        panel.add(panel_2, BorderLayout.NORTH);
+        
+        JLabel lblNewLabel_1 = new JLabel("Ingrese los datos del nuevo usuario, cuando todos los campos esten rellenados presione registrar.");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        panel_2.add(lblNewLabel_1);
+        
+        JPanel panelRegister = new JPanel();
+        contentPane.add(panelRegister, BorderLayout.SOUTH);
+        
+        JButton btnNewButton_1 = new JButton("Registrar");
+       
+        panelRegister.add(btnNewButton_1);
         comboBoxPayment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Obtiene la opción seleccionada del ComboBox
-                payment = comboBoxPayment.getSelectedItem().toString();
-                textPaneRegister.setText("");
-	           	String txtRegister = "Nombre: " + user.getName() +"\n" +
-						 "Edad: "+ user.getAge() + "\n" +
-						 "Documento de Identidad: " + user.getId() + "\n"+
-						 "Genero: " + user.getGender() + "\n"+ 
-						 "Plan: " + planString +"\n"+
-						 "Metodo de pago: " + payment +"\n";
-			
-			
-	           	textPaneRegister.setText(txtRegister);
+               payment = comboBoxPayment.getSelectedItem().toString();
              
             }
         });
-		
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		allFields = true;
+        		
+        		if(payment == "") {
+        			allFields = false;
+        			message = "No es posible registrar el usuario, porfavor seleccione un METODO DE PAGO.";
+        		
+        		}
+        		
+        		if(planString == "") {
+        			allFields = false;
+        			message = "No es posible registrar el usuario, porfavor seleccione un PLAN.";
+        		
+        		}
+        		
+        		if(gender == "") {
+        			allFields = false;
+        			message = "No es posible registrar el usuario, porfavor seleccione un GENERO.";
+        		
+        		}
+        		
+        		if(textFieldId.getText().isBlank()) {
+        			allFields = false;
+        			message = "No es posible registrar el usuario, porfavor ingrese el DOCUMENTO DE IDENTIDAD.";
+        		}
+        		if(textFieldAge.getText().isBlank()) {
+        			allFields = false;
+        			message = "No es posible registrar el usuario, porfavor ingrese la EDAD.";
+        		}
+        		if(textFieldName.getText().isBlank()) {
+        			allFields = false;
+        			message = "No es posible registrar el usuario, porfavor ingrese el NOMBRE.";
+        		}
+        		
+        		labelMessages.setText(message);
+        	
+        		if(allFields) {
+        			User user = new User();
+        			
+        			labelMessages.setText("Exitosamente registrado.");
+        			user.setName(textFieldName.getText());
+        			user.setAge(Integer.parseInt(textFieldAge.getText()));
+        			user.setId(textFieldId.getText());
+        			user.setGender(gender);
+        			user.setCurrentPlan(planUser);
+        			
+
+					statsManager.plusTotalSubs(1);
+					statsManager.plusTotalProfits(user.getCurrentPlan().getValue());
+				
+				
+					user.getCurrentPlan().incrementTotalTimesAdquired();
+					user.setStatusPlan(true);
+					user.setDateLastPayment(LocalDate.now());
+					user.calDueDatePlan(); 
+					
+					if(payment == "Tarjeta") {
+						statsManager.plusProfitCardPayment(user.getCurrentPlan().getValue());
+						statsManager.plusTimesCardPayment(1);
+					}
+					if(payment == "Efectivo") {
+						statsManager.plusProfitCashPayment(user.getCurrentPlan().getValue());
+						statsManager.plusTimesCashPayment(1);
+					}
+					if(payment == "Transferencia Bancaria") {
+						statsManager.plusProfitBankTransfer(user.getCurrentPlan().getValue());
+						statsManager.plusTimesBankTransfer(1);
+					}
+					
+					users.add(user);
+					user.addToHistory("Se ha registrado con el plan: " + user.getCurrentPlan().getPlan());
+					JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager);
+					JsonManager.writeJsonArrayListUser(routeUserJson, users);
+					JsonManager.writeJsonArrayListPlan(routePlanJson, plans);
+					
+					message = "Se ha registrado exitosamente al usuario " + user.getName();
+					labelMessages.setText(message);
+			
+		    		planString = "";
+		    		payment = "";
+		    		
+		    		textFieldName.setText("");
+		    		textFieldAge.setText("");
+		    		textFieldId.setText("");
+		    		
+		    		comboBoxGender.setSelectedItem("");
+		    		comboBoxPlan.setSelectedItem("");
+		    		comboBoxPayment.setSelectedItem("");
+		    		
+		    		
+        		}
+        		
+        		
+        	}
+        });
 	
 		//endBanner
 	}

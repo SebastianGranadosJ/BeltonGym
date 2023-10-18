@@ -110,6 +110,13 @@ public class MainPanel extends JFrame {
 		panelCenter.add(btnRegisterUser);
 		
 		JButton btnFreezeDueDate = new JButton("Congelar Suscripción");
+		btnFreezeDueDate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FreezeDueDatePanel freezeDueDatePanel = new FreezeDueDatePanel();
+				freezeDueDatePanel.setVisible(true);
+				dispose();
+			}
+		});
 		panelCenter.add(btnFreezeDueDate);
 		
 		JButton btnAddPlan = new JButton("Crear Plan");
