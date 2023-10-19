@@ -25,6 +25,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class MainPanel extends JFrame {
 
@@ -127,6 +128,13 @@ public class MainPanel extends JFrame {
 		panelCenter.add(btnFreezeDueDate);
 		
 		JButton btnAddPlan = new JButton("Crear Plan");
+		btnAddPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreatePlanPanel createPlanPanel = new CreatePlanPanel();
+				createPlanPanel.setVisible(true);
+				dispose();
+			}
+		});
 		panelCenter.add(btnAddPlan);
 		
 		JButton btnMenuStatistics = new JButton("Estadísticas");
@@ -135,6 +143,13 @@ public class MainPanel extends JFrame {
 		JPanel panelRight = new JPanel();
 		panelRight.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.add(panelRight);
+		panelRight.setLayout(new BorderLayout(0, 0));
+		
+		JTextPane txtpnNotificaciones = new JTextPane();
+		txtpnNotificaciones.setEditable(false);
+		txtpnNotificaciones.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtpnNotificaciones.setText("Notificaciones");
+		panelRight.add(txtpnNotificaciones, BorderLayout.CENTER);
 	}
 
 }

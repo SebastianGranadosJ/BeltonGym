@@ -5,10 +5,10 @@ public class Plan {
 	
 	private String plan;
     private double value;
-    private String description;
     private int durationDay = 0;
     private int durationMonth = 0;
     private int durationYear = 0;
+    private String description;
     private int totalTimesAdquired = 0;
 
 

@@ -145,8 +145,8 @@ public class Main {
 		planData += "Valor: " + plan.getValue() + "\n";
 		planData += "Duración: " + plan.getDurationYear() + " años con "
                 + plan.getDurationMonth() + " meses y "
-                + plan.getDurationDay() + " días" + "\n";
-	
+                + plan.getDurationDay() + " días" + "\n"
+				+ "Total de veces adquirido: " + plan.getTotalTimesAdquired() + "\n";	
 		return planData;
 	}
 	 public static String stringUsersBasicData(List<User> users) {
