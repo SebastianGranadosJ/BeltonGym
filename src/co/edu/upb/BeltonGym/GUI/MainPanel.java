@@ -24,8 +24,12 @@ import javax.swing.SpringLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.ImageIcon;
 
 public class MainPanel extends JFrame {
 
@@ -58,14 +62,26 @@ public class MainPanel extends JFrame {
 		panelFunctions.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.setLayout(new GridLayout(1, 0, 0, 0));
 		
+		JPanel panelCenter = new JPanel();
+		panelCenter.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelFunctions.add(panelCenter);
+		panelCenter.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("E:\\Abraham\\Descargas\\descarga (1).jpg"));
+		lblNewLabel_1.setBounds(0, 0, 205, 394);
+		panelCenter.add(lblNewLabel_1);
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.add(panelLeft);
 		panelLeft.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		JPanel panel = new JPanel();
+		panelLeft.add(panel);
+		
 		//BUTTONS
 		
-		JButton btnMenuUsers = new JButton("Menú de Usuarios");
+		JButton btnMenuUsers = new JButton("Gestion de Usuarios");
 		btnMenuUsers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//When the button is press its gonna create this pannel
@@ -78,67 +94,14 @@ public class MainPanel extends JFrame {
 		});
 		panelLeft.add(btnMenuUsers);
 		
-		JButton btnUpdateSubs = new JButton("Renovar Suscripción");
-		btnUpdateSubs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UpdateSubsPanel updateSubsPanel = new UpdateSubsPanel();
-				updateSubsPanel.setVisible(true);
-				dispose();
-				
-			}
-		});
-		panelLeft.add(btnUpdateSubs);
+		JPanel panel_2 = new JPanel();
+		panelLeft.add(panel_2);
 		
-		JButton btnMenuPlans = new JButton("Menú de Planes");
-		btnMenuPlans.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MenuPlansPanel menuPlansPanel = new MenuPlansPanel();
-				menuPlansPanel.setVisible(true);
-				dispose();
-			}
-		});
-		panelLeft.add(btnMenuPlans);
-		
-		JButton btnBanUser = new JButton("Banear Usuario");
+		JButton btnBanUser = new JButton("Gestion de Negocio");
 		panelLeft.add(btnBanUser);
 		
-		JPanel panelCenter = new JPanel();
-		panelCenter.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelFunctions.add(panelCenter);
-		panelCenter.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JButton btnRegisterUser = new JButton("Registrar Usuario");
-		btnRegisterUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				RegisterUserPanel registerUserPanel = new RegisterUserPanel();
-				registerUserPanel.setVisible(true);
-				dispose();
-			}
-		});
-		panelCenter.add(btnRegisterUser);
-		
-		JButton btnFreezeDueDate = new JButton("Congelar Suscripción");
-		btnFreezeDueDate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FreezeDueDatePanel freezeDueDatePanel = new FreezeDueDatePanel();
-				freezeDueDatePanel.setVisible(true);
-				dispose();
-			}
-		});
-		panelCenter.add(btnFreezeDueDate);
-		
-		JButton btnAddPlan = new JButton("Crear Plan");
-		btnAddPlan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CreatePlanPanel createPlanPanel = new CreatePlanPanel();
-				createPlanPanel.setVisible(true);
-				dispose();
-			}
-		});
-		panelCenter.add(btnAddPlan);
-		
-		JButton btnMenuStatistics = new JButton("Estadísticas");
-		panelCenter.add(btnMenuStatistics);
+		JPanel panel_1 = new JPanel();
+		panelLeft.add(panel_1);
 		
 		JPanel panelRight = new JPanel();
 		panelRight.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -150,6 +113,6 @@ public class MainPanel extends JFrame {
 		txtpnNotificaciones.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtpnNotificaciones.setText("Notificaciones");
 		panelRight.add(txtpnNotificaciones, BorderLayout.CENTER);
+		
 	}
-
 }
