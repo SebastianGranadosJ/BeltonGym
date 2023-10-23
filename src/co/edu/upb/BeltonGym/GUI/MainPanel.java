@@ -100,6 +100,14 @@ public class MainPanel extends JFrame {
 		panelLeft.add(btnMenuPlans);
 		
 		JButton btnBanUser = new JButton("Banear Usuario");
+		btnBanUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BanUnbanPanel banUnbanPanel = new BanUnbanPanel();
+				banUnbanPanel.setVisible(true);
+				dispose();
+				
+			}
+		});
 		panelLeft.add(btnBanUser);
 		
 		JPanel panelCenter = new JPanel();

@@ -113,6 +113,15 @@ public class Main {
 			
 			
 	}//updateSubs()
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
 		
 		if(user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
@@ -171,6 +180,17 @@ public class Main {
 		 
 		 return usersBasicData;
 	 }
+	 public static String stringUsersBasicDataWithBanStatus(List<User> users) {
+		 String usersBasicData = "";
+		 int nmr = 0;
+		 
+		 for(int ii = 0; ii < users.size(); ii++) {
+				nmr = ii + 1;
+				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() + "      " + users.get(ii).bannedAsString() +"\n";
+			}
+		 
+		 return usersBasicData;
+	 }
 	 public static String stringReturnUserData(List<User> users, int ii) { //This method return user's data as String
 		 	String stringReturn = "";
 			int index = ii - 1;
@@ -183,6 +203,7 @@ public class Main {
 			stringReturn += "Estado del plan: " + users.get(index).statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + users.get(index).getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan()+"\n";
+			stringReturn += "Estado de baneo: " + users.get(index).bannedAsString()+"\n";
 			stringReturn += "-----Historial de Usuario-----" + "\n";
 			stringReturn += users.get(index).getHistory()+"\n";
 			
@@ -199,6 +220,7 @@ public class Main {
 			stringReturn += "Estado del plan: " + user.statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + user.getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + user.getDueDatePlan()+"\n";
+			stringReturn += "Estado de baneo: " + user.bannedAsString()+"\n";
 			stringReturn += "-----Historial de Usuario-----" + "\n";
 			stringReturn += user.getHistory()+"\n";
 			

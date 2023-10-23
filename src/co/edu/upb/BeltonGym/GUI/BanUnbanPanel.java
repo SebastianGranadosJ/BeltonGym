@@ -1,34 +1,42 @@
 package co.edu.upb.BeltonGym.GUI;
-import co.edu.upb.BeltonGym.*;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 import javax.swing.*;
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-public class FreezeDueDatePanel extends JFrame {
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+
+import co.edu.upb.BeltonGym.BusinessStatistics;
+import co.edu.upb.BeltonGym.JsonManager;
+import co.edu.upb.BeltonGym.Main;
+import co.edu.upb.BeltonGym.Plan;
+import co.edu.upb.BeltonGym.User;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+import javax.swing.JCheckBox;
+
+public class BanUnbanPanel extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldUser;
-	private JTextField textFieldDays;
 
 	private String routeUserJson = "Users.json";
 	private String routePlanJson = "Plans.json";
@@ -39,10 +47,12 @@ public class FreezeDueDatePanel extends JFrame {
 	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
 	private BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 	
-	private List<User> activeUsers = Main.listReturnUserActive(users);
-	private String dataActiveUsers = Main.stringUsersBasicDataWithDue(users);
+	private String dataUsers = Main.stringUsersBasicDataWithBanStatus(users);
 	private String message = "Esperando datos.";
 	private boolean allFields = false;
+	private User selectedUser = null;
+	/**
+
 	/**
 	 * Launch the application.
 	 */
@@ -50,7 +60,7 @@ public class FreezeDueDatePanel extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FreezeDueDatePanel frame = new FreezeDueDatePanel();
+					BanUnbanPanel frame = new BanUnbanPanel();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +72,7 @@ public class FreezeDueDatePanel extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FreezeDueDatePanel() {
+	public BanUnbanPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 480);
 		contentPane = new JPanel();
@@ -87,7 +97,7 @@ public class FreezeDueDatePanel extends JFrame {
 		});
 		panelBanner.add(btnNewButton, BorderLayout.WEST);
 		
-		JLabel lblNewLabel = new JLabel("Congelar Suscripción");
+		JLabel lblNewLabel = new JLabel("Banear/Desbanear Usuario");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panelBanner.add(lblNewLabel, BorderLayout.CENTER);
@@ -115,9 +125,9 @@ public class FreezeDueDatePanel extends JFrame {
 		JPanel panelButton = new JPanel();
 		panelCenter.add(panelButton, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_1 = new JButton("Congelar");
+		JButton btnBanUnban = new JButton("Banear / Desbanear");
 		
-		panelButton.add(btnNewButton_1);
+		panelButton.add(btnBanUnban);
 		
 		JPanel panel_1 = new JPanel();
 		panelCenter.add(panel_1, BorderLayout.CENTER);
@@ -158,18 +168,16 @@ public class FreezeDueDatePanel extends JFrame {
 		panelDays.add(panelInput, BorderLayout.EAST);
 		panelInput.setLayout(new BorderLayout(0, 0));
 		
-		textFieldDays = new JTextField();
-		textFieldDays.setText("");
-		panelInput.add(textFieldDays);
-		textFieldDays.setColumns(10);
+		JCheckBox checkBoxConfirm = new JCheckBox("Confirmo      ");
+		panelInput.add(checkBoxConfirm, BorderLayout.NORTH);
 		
 		JPanel panel_4 = new JPanel();
 		panelDays.add(panel_4, BorderLayout.CENTER);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Ingrese el numero de dias que va a congelar");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_4.add(lblNewLabel_3);
+		JLabel labelConfirm = new JLabel("Esperando selección de usuario");
+		labelConfirm.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_4.add(labelConfirm);
 		
 		JPanel panelInfo = new JPanel();
 		panelInfo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -197,49 +205,54 @@ public class FreezeDueDatePanel extends JFrame {
 		JLabel lblNewLabel_5 = new JLabel("ID");
 		panelTopData.add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_6 = new JLabel("Vencimiento");
+		JLabel lblNewLabel_6 = new JLabel("Estado");
 		panelTopData.add(lblNewLabel_6);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		panelUsers.add(scrollPane, BorderLayout.CENTER);
 		
 		JTextPane textPaneUsers = new JTextPane();
-		textPaneUsers.setText(dataActiveUsers);
+		textPaneUsers.setText(dataUsers);
 		textPaneUsers.setEditable(false);
 		scrollPane.setViewportView(textPaneUsers);
 		
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnBanUnban.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				allFields = true;
 				
-				if(textFieldDays.getText().isBlank()) {
+				if(checkBoxConfirm.isSelected() == false) {
 					allFields = false;
-					message = "Ingrese el numero de dias por el que desea congelar el plan.";
+					message = "Marque confirmar si desea continuar con la acción.";
 				}
 				
-				if(textFieldUser.getText().isBlank()) {
+				if(selectedUser == null) {
 					allFields = false;
-					message = "Ingrese el numero de usuario que desea congelar.";
+					message = "Ingrese el numero de usuario que desea seleccionar.";
 				}
 				
 				
 				
 				if(allFields) {
 					
-					int daysToFreeze = Integer.parseInt(textFieldDays.getText());
-					int index = Integer.parseInt(textFieldUser.getText()) - 1;
-					User user = users.get(index);
-				    
-					LocalDate lastDueDate = user.getDueDatePlan();
-				    LocalDate newDueDate = lastDueDate.plusDays(daysToFreeze);
-				    user.setDueDatePlan(newDueDate);
-				    user.addToHistory("Se ha congelado el plan por " + daysToFreeze + " dias.");
+					if(selectedUser.isBanned()) {
+						selectedUser.setBanned(false);
+						selectedUser.addToHistory("El usuario ha sido desbaneado");
+						message = "La usuario " + selectedUser.getName() + " ha sido desbaneado.";
+					}
+					else {
+						selectedUser.setBanned(true);
+						selectedUser.addToHistory("El usuario ha sido baneado");
+						message = "La usuario " + selectedUser.getName() + " ha sido baneado.";
+					}
+					
+				   
 				    JsonManager.writeJsonArrayListUser(routeUserJson, users);
-				    dataActiveUsers = Main.stringUsersBasicDataWithDue(users);
-				    textPaneUsers.setText(dataActiveUsers);
-					message = "La plan de " + user.getName() + " ahora vence el " + newDueDate;
-					textFieldDays.setText("");
+				    dataUsers = Main.stringUsersBasicDataWithBanStatus(users);
+				    textPaneUsers.setText(dataUsers);
+					
+				    checkBoxConfirm.setSelected(false);;
 					textFieldUser.setText("");
+					selectedUser = null;
 					
 					
 				}
@@ -247,6 +260,48 @@ public class FreezeDueDatePanel extends JFrame {
 				
 			}
 		});
+		textFieldUser.getDocument().addDocumentListener(new DocumentListener() {
+			  public void insertUpdate(DocumentEvent e) {
+	                updateLabel();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                updateLabel();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                updateLabel();
+	            }
+
+	            private void updateLabel() {
+	            	if(Main.isInteger(textFieldUser.getText())){
+		            	if((0 <= Integer.parseInt(textFieldUser.getText())-1) && (Integer.parseInt(textFieldUser.getText() ) - 1<users.size() ) ) {
+		            		selectedUser = users.get(Integer.parseInt(textFieldUser.getText())-1);
+		            		if(selectedUser.isBanned()) {
+		            			labelConfirm.setText("Desea desbanear al usuario " + selectedUser.getName() + " ?");
+		            			btnBanUnban.setText("Desbanear");
+		            			
+		            		}
+		            		else {
+		            			labelConfirm.setText("Desea banear al usuario " + selectedUser.getName() + " ?");
+		            			btnBanUnban.setText("Banear");
+		            		}
+		            		
+		            	}else {
+		            		labelConfirm.setText("Esperando selección de usuario");
+		            		btnBanUnban.setText("Banear / Desbanear");
+		            		selectedUser = null;
+		            	}
+	            	}else {
+	            		labelConfirm.setText("Esperando selección de usuario");
+	            		btnBanUnban.setText("Banear / Desbanear");
+	            		selectedUser = null;
+	            	}
+	            }
+			
+        });
 	}
 
 }
