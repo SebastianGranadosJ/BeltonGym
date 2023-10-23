@@ -140,18 +140,6 @@ public class User {
 	public void setHistory(String history) {
 		this.history = history;
 	}
-    public static void updatePlanStatus(List<User> users) {
-        LocalDate currentDate = LocalDate.now();
-
-        for (User user : users) {
-            if (user.isStatusPlan()) {
-                LocalDate dueDate = user.getDueDatePlan();
-                if (currentDate.isAfter(dueDate)) {
-                    user.setStatusPlan(false); // Cambia el estado del plan a inactivo
-                    user.addToHistory("Plan vencido");
-                }
-            }
-        }
-    }
+    
 
 }

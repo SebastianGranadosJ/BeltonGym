@@ -27,7 +27,7 @@ public class Main {
         List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
         List<Plan> plans = JsonManager.readJsonArrayListPlan(routePlanJson);
         BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
-        user.updatePlanStatus(users);
+        updatePlanStatus(users);
 		MainPanel mainPanel = new MainPanel();
 		mainPanel.setVisible(true);
 
@@ -426,6 +426,19 @@ public class Main {
         System.out.println("Selección de usuario no válida.");
     }
 }
+    public static void updatePlanStatus(List<User> users) {
+        LocalDate currentDate = LocalDate.now();
+
+        for (User user : users) {
+            if (user.isStatusPlan()) {
+                LocalDate dueDate = user.getDueDatePlan();
+                if (currentDate.isAfter(dueDate)) {
+                    user.setStatusPlan(false); // Cambia el estado del plan a inactivo
+                    user.addToHistory("Plan vencido");
+                }
+            }
+        }
+    }
 
 }
    
