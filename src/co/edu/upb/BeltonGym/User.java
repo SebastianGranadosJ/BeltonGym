@@ -127,9 +127,9 @@ public class User {
 
     public String bannedAsString() {
         if (banned) {
-            return "BANNED";
+            return "BANEADO";
         } else {
-            return "No Banned";
+            return "No Baneado";
         }
     }
 

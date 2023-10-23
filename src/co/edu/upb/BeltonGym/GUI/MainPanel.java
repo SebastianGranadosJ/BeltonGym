@@ -25,6 +25,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class MainPanel extends JFrame {
 
@@ -89,9 +90,24 @@ public class MainPanel extends JFrame {
 		panelLeft.add(btnUpdateSubs);
 		
 		JButton btnMenuPlans = new JButton("Menú de Planes");
+		btnMenuPlans.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPlansPanel menuPlansPanel = new MenuPlansPanel();
+				menuPlansPanel.setVisible(true);
+				dispose();
+			}
+		});
 		panelLeft.add(btnMenuPlans);
 		
 		JButton btnBanUser = new JButton("Banear Usuario");
+		btnBanUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BanUnbanPanel banUnbanPanel = new BanUnbanPanel();
+				banUnbanPanel.setVisible(true);
+				dispose();
+				
+			}
+		});
 		panelLeft.add(btnBanUser);
 		
 		JPanel panelCenter = new JPanel();
@@ -110,9 +126,23 @@ public class MainPanel extends JFrame {
 		panelCenter.add(btnRegisterUser);
 		
 		JButton btnFreezeDueDate = new JButton("Congelar Suscripción");
+		btnFreezeDueDate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FreezeDueDatePanel freezeDueDatePanel = new FreezeDueDatePanel();
+				freezeDueDatePanel.setVisible(true);
+				dispose();
+			}
+		});
 		panelCenter.add(btnFreezeDueDate);
 		
 		JButton btnAddPlan = new JButton("Crear Plan");
+		btnAddPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreatePlanPanel createPlanPanel = new CreatePlanPanel();
+				createPlanPanel.setVisible(true);
+				dispose();
+			}
+		});
 		panelCenter.add(btnAddPlan);
 		
 		JButton btnMenuStatistics = new JButton("Estadísticas");
@@ -121,6 +151,13 @@ public class MainPanel extends JFrame {
 		JPanel panelRight = new JPanel();
 		panelRight.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.add(panelRight);
+		panelRight.setLayout(new BorderLayout(0, 0));
+		
+		JTextPane txtpnNotificaciones = new JTextPane();
+		txtpnNotificaciones.setEditable(false);
+		txtpnNotificaciones.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtpnNotificaciones.setText("Notificaciones");
+		panelRight.add(txtpnNotificaciones, BorderLayout.CENTER);
 	}
 
 }

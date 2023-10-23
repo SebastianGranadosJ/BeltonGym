@@ -26,7 +26,7 @@ public class UpdateSubsPanel extends JFrame {
 	private String routeStatsJson = "BusinessStatistics.json";
 	
 	private List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
-	private List<User> inactiveUsers = Main.listReturnUserInactiveBasicData(users);
+	private List<User> inactiveUsers = Main.listReturnUserInactive(users);
 	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
 	private BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
 	private String payment = "";
@@ -37,18 +37,6 @@ public class UpdateSubsPanel extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UpdateSubsPanel frame = new UpdateSubsPanel();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -245,18 +233,7 @@ public class UpdateSubsPanel extends JFrame {
 		//endBanner
 		
 		//Listener Text choose User
-		textField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Obtener el texto ingresado por el usuario
-                String input = textField.getText();
-                int inputInt = Integer.parseInt(input);
-                message = "";
-                selectedUser = inactiveUsers.get(inputInt - 1);
-                message += Main.stringReturnUserData(selectedUser);
-                txtPaneInfo.setText(message);
-               
-            }
-        });
+	
 		
 		comboBoxPlan.addActionListener(new ActionListener() {
             @Override
@@ -284,6 +261,13 @@ public class UpdateSubsPanel extends JFrame {
         });
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String input = textField.getText();
+                int inputInt = Integer.parseInt(input);
+                message = "";
+                selectedUser = inactiveUsers.get(inputInt - 1);
+                message += Main.stringReturnUserData(selectedUser);
+                txtPaneInfo.setText(message);
+				
 				if(payment != "" && planString != "" && selectedUser != null) {
 					
 					
@@ -324,7 +308,7 @@ public class UpdateSubsPanel extends JFrame {
 				
 				
 		           	txtPaneInfo.setText(txtRegister);
-		           	inactiveUsers = Main.listReturnUserInactiveBasicData(users);
+		           	inactiveUsers = Main.listReturnUserInactive(users);
 		           	 
 		    		textPaneUserData.setText(Main.stringUsersBasicData(inactiveUsers));
 		    		selectedUser = null;

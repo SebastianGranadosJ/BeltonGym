@@ -1,3 +1,5 @@
+
+
 package co.edu.upb.BeltonGym.GUI;
 import co.edu.upb.BeltonGym.*;
 import java.awt.BorderLayout;
@@ -24,32 +26,45 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
-public class RegisterUserPanel extends JFrame {
+public class CreatePlanPanel extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textFieldName;
-	private JTextField textFieldAge;
-	private JTextField textFieldId;
-	
-	private String routeUserJson = "Users.json";
+
 	private String routePlanJson = "Plans.json";
 	private String routeStatsJson = "BusinessStatistics.json";
-	
-	
-	private List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
+	private String message = "Esperando datos.";
 	private List<Plan> plans =  JsonManager.readJsonArrayListPlan(routePlanJson);
 	private BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
-	private String payment = "";
-	private String gender = "";
-	private String planString = "";
-	private Plan planUser = null;
-	private String message = "Esperando datos.";
 	private boolean allFields;
+	private JTextField textFieldName;
+	private JTextField textFieldValue;
+	private JTextField textFieldDays;
+	private JTextField textFieldMonths;
+	private JTextField textFieldYears;
+	private JTextField textFieldDescrip;
 	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CreatePlanPanel frame = new CreatePlanPanel();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-	public RegisterUserPanel() {
-	
+	/**
+	 * Create the frame.
+	 */
+	public CreatePlanPanel() {
+
 		//Attributes new User
 	
 		
@@ -83,7 +98,7 @@ public class RegisterUserPanel extends JFrame {
 		});
 		panelBanner.add(btnNewButton, BorderLayout.WEST);
 		
-		JLabel lblNewLabel = new JLabel("Registrar Usuario");
+		JLabel lblNewLabel = new JLabel("Crear Nuevo Plan");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panelBanner.add(lblNewLabel, BorderLayout.CENTER);
@@ -126,7 +141,7 @@ public class RegisterUserPanel extends JFrame {
 		panelAttribute.add(panelAge);
 		panelAge.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_3 = new JLabel("Edad:");
+		JLabel lblNewLabel_3 = new JLabel("Valor:");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		panelAge.add(lblNewLabel_3, BorderLayout.CENTER);
@@ -136,7 +151,7 @@ public class RegisterUserPanel extends JFrame {
 		panelAttribute.add(panelID);
 		panelID.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_4 = new JLabel("Documento de Identidad:");
+		JLabel lblNewLabel_4 = new JLabel("Dias de Duración:");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
 		panelID.add(lblNewLabel_4, BorderLayout.CENTER);
@@ -146,8 +161,8 @@ public class RegisterUserPanel extends JFrame {
 		panelAttribute.add(panelGender);
 		panelGender.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_5 = new JLabel("Genero:");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel lblNewLabel_5 = new JLabel("Meses de Duración:");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		panelGender.add(lblNewLabel_5, BorderLayout.CENTER);
 		
@@ -156,8 +171,8 @@ public class RegisterUserPanel extends JFrame {
 		panelAttribute.add(panelPlan);
 		panelPlan.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_6 = new JLabel("Plan:");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel lblNewLabel_6 = new JLabel("Años de Duración:");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
 		panelPlan.add(lblNewLabel_6, BorderLayout.CENTER);
 		
@@ -166,7 +181,7 @@ public class RegisterUserPanel extends JFrame {
 		panelAttribute.add(panelPayment);
 		panelPayment.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_7 = new JLabel("Metodo de Pago:");
+		JLabel lblNewLabel_7 = new JLabel("Descripción:");
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
 		panelPayment.add(lblNewLabel_7, BorderLayout.CENTER);
@@ -179,13 +194,17 @@ public class RegisterUserPanel extends JFrame {
 		JPanel panelNameInput = new JPanel();
 		panelNameInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelImput.add(panelNameInput);
-		panelNameInput.setLayout(new BorderLayout(0, 0));
 		
 		
 		textFieldName = new JTextField();
 		textFieldName.setText("");
 		textFieldName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelNameInput.add(textFieldName, BorderLayout.CENTER);
+		panelNameInput.setLayout(new BorderLayout(0, 0));
+		
+		textFieldName = new JTextField();
+		panelNameInput.add(textFieldName);
+		textFieldName.setColumns(10);
 		textFieldName.setColumns(10);
 		
 		JPanel panelAgeInput = new JPanel();
@@ -193,88 +212,56 @@ public class RegisterUserPanel extends JFrame {
 		panelImput.add(panelAgeInput);
 		panelAgeInput.setLayout(new BorderLayout(0, 0));
 		
-		textFieldAge = new JTextField();
-		textFieldAge.setText("");
-		textFieldAge.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelAgeInput.add(textFieldAge, BorderLayout.CENTER);
-		textFieldAge.setColumns(10);
+
+		
+		textFieldValue = new JTextField();
+		panelAgeInput.add(textFieldValue);
+		textFieldValue.setColumns(10);
+	
 		
 		JPanel panelIdInput = new JPanel();
 		panelIdInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelImput.add(panelIdInput);
 		panelIdInput.setLayout(new BorderLayout(0, 0));
 		
-		textFieldId = new JTextField();
-		textFieldId.setText("");
-		textFieldId.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelIdInput.add(textFieldId, BorderLayout.CENTER);
-		textFieldId.setColumns(10);
+
+		
+		textFieldDays = new JTextField();
+		panelIdInput.add(textFieldDays);
+		textFieldDays.setColumns(10);
+
 	
 		JPanel panelGenderInput = new JPanel();
 		panelGenderInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelImput.add(panelGenderInput);
 		panelGenderInput.setLayout(new BorderLayout(0, 0));
 		
-		JComboBox comboBoxGender = new JComboBox();
-		comboBoxGender.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBoxGender.setToolTipText("Seleccione");
-		comboBoxGender.setModel(new DefaultComboBoxModel(new String[] {"", "Masculino", "Femenino"}));
-		comboBoxGender.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtiene la opción seleccionada del ComboBox
-                 gender = comboBoxGender.getSelectedItem().toString();
-            }
-        });
-		
-		panelGenderInput.add(comboBoxGender, BorderLayout.CENTER);
+		textFieldMonths = new JTextField();
+		panelGenderInput.add(textFieldMonths, BorderLayout.CENTER);
+		textFieldMonths.setColumns(10);
 		
 		JPanel panelPlanInput = new JPanel();
 		panelPlanInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelImput.add(panelPlanInput);
 		panelPlanInput.setLayout(new BorderLayout(0, 0));
 		
-		JComboBox<String> comboBoxPlan = new JComboBox<>();
-		comboBoxPlan.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBoxPlan.setMaximumRowCount(30);
-		comboBoxPlan.setToolTipText("");
-		panelPlanInput.add(comboBoxPlan, BorderLayout.CENTER);
+		textFieldYears = new JTextField();
+		panelPlanInput.add(textFieldYears, BorderLayout.CENTER);
+		textFieldYears.setColumns(10);
+		
+		JPanel panel_1 = new JPanel();
+		panelImput.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		textFieldDescrip = new JTextField();
+		panel_1.add(textFieldDescrip);
+		textFieldDescrip.setColumns(10);
 		
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 		model.addElement("");
 		for(int ii = 0; ii < plans.size(); ii++) {
 			model.addElement(plans.get(ii).getPlan());
 		}
-        comboBoxPlan.setModel(model);
-        
-		
-		comboBoxPlan.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtiene la opción seleccionada del ComboBox
-                planString = comboBoxPlan.getSelectedItem().toString();
-                for(int ii = 0; ii <plans.size(); ii++) {
-                	if (plans.get(ii).getPlan() == planString) {
-                		planUser = plans.get(ii);
-                	
-                	}
-                
-                }
-            }
-        });
-		
-		
-		
-		
-        JPanel panelPaymentInput = new JPanel();
-        panelPaymentInput.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-        panelImput.add(panelPaymentInput);
-        panelPaymentInput.setLayout(new BorderLayout(0, 0));
-        
-        JComboBox comboBoxPayment = new JComboBox();
-        comboBoxPayment.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        comboBoxPayment.setModel(new DefaultComboBoxModel(new String[] {"", "Efectivo", "Tarjeta", "Transferencia Bancaria"}));
-        panelPaymentInput.add(comboBoxPayment, BorderLayout.CENTER);
         
         JPanel panelMessages = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panelMessages.getLayout();
@@ -289,7 +276,7 @@ public class RegisterUserPanel extends JFrame {
         flowLayout_1.setVgap(12);
         panel.add(panel_2, BorderLayout.NORTH);
         
-        JLabel lblNewLabel_1 = new JLabel("Ingrese los datos del nuevo usuario, cuando todos los campos esten rellenados presione registrar.");
+        JLabel lblNewLabel_1 = new JLabel("Ingrese los datos del nuevo plan, cuando todos los campos esten rellenados presione crear.");
         lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
         lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
         lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -298,106 +285,71 @@ public class RegisterUserPanel extends JFrame {
         JPanel panelRegister = new JPanel();
         contentPane.add(panelRegister, BorderLayout.SOUTH);
         
-        JButton btnNewButton_1 = new JButton("Registrar");
+        JButton btnNewButton_1 = new JButton("Crear");
        
         panelRegister.add(btnNewButton_1);
-        comboBoxPayment.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtiene la opción seleccionada del ComboBox
-               payment = comboBoxPayment.getSelectedItem().toString();
-             
-            }
-        });
         btnNewButton_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		allFields = true;
         		
-        		if(payment == "") {
+        		if(textFieldDescrip.getText().isBlank()) {
         			allFields = false;
-        			message = "No es posible registrar el usuario, porfavor seleccione un METODO DE PAGO.";
+        			message = "No es posible crear el plan, porfavor ingrese una DESCRIPCIÓN.";
         		
         		}
         		
-        		if(planString == "") {
+        		if(textFieldYears.getText().isBlank()) {
         			allFields = false;
-        			message = "No es posible registrar el usuario, porfavor seleccione un PLAN.";
+        			message = "No es posible crear el plan, porfavor ingrese cuantos AÑOS dura el plan.";
         		
         		}
         		
-        		if(gender == "") {
+        		if(textFieldMonths.getText().isBlank()) {
         			allFields = false;
-        			message = "No es posible registrar el usuario, porfavor seleccione un GENERO.";
+        			message = "No es posible crear el plan, porfavor ingrese cuantos MESES dura el plan.";
         		
         		}
         		
-        		if(textFieldId.getText().isBlank()) {
+        		if(textFieldDays.getText().isBlank()) {
         			allFields = false;
-        			message = "No es posible registrar el usuario, porfavor ingrese el DOCUMENTO DE IDENTIDAD.";
+        			message = "No es posible crear el plan, porfavor ingrese cuantos DIAS dura el plan.";
         		}
-        		if(textFieldAge.getText().isBlank()) {
+        		if(textFieldValue.getText().isBlank()) {
         			allFields = false;
-        			message = "No es posible registrar el usuario, porfavor ingrese la EDAD.";
+        			message = "No es posible crear el plan, porfavor ingrese un VALOR.";
         		}
         		if(textFieldName.getText().isBlank()) {
         			allFields = false;
-        			message = "No es posible registrar el usuario, porfavor ingrese el NOMBRE.";
+        			message = "No es posible crear el plan, porfavor ingrese un NOMBRE.";
         		}
         		
         		labelMessages.setText(message);
         	
         		if(allFields) {
-        			User user = new User();
+        			Plan plan = new Plan();
         			
         			labelMessages.setText("Exitosamente registrado.");
-        			user.setName(textFieldName.getText());
-        			user.setAge(Integer.parseInt(textFieldAge.getText()));
-        			user.setId(textFieldId.getText());
-        			user.setGender(gender);
-        			user.setCurrentPlan(planUser);
-        			
-
-					statsManager.plusTotalSubs(1);
-					statsManager.plusTotalProfits(user.getCurrentPlan().getValue());
-				
-				
-					user.getCurrentPlan().incrementTotalTimesAdquired();
-					user.setStatusPlan(true);
-					user.setDateLastPayment(LocalDate.now());
-					user.calDueDatePlan(); 
-					
-					if(payment == "Tarjeta") {
-						statsManager.plusProfitCardPayment(user.getCurrentPlan().getValue());
-						statsManager.plusTimesCardPayment(1);
-					}
-					if(payment == "Efectivo") {
-						statsManager.plusProfitCashPayment(user.getCurrentPlan().getValue());
-						statsManager.plusTimesCashPayment(1);
-					}
-					if(payment == "Transferencia Bancaria") {
-						statsManager.plusProfitBankTransfer(user.getCurrentPlan().getValue());
-						statsManager.plusTimesBankTransfer(1);
-					}
-					
-					users.add(user);
-					user.addToHistory("Se ha registrado con el plan: " + user.getCurrentPlan().getPlan());
+        			plan.setPlan(textFieldName.getText());
+        			plan.setValue(Integer.parseInt(textFieldValue.getText()));
+        			plan.setDurationDay(Integer.parseInt(textFieldDays.getText()));
+        			plan.setDurationMonth(Integer.parseInt(textFieldMonths.getText()));
+        			plan.setDurationYear(Integer.parseInt(textFieldYears.getText()));
+        			plan.setDescription(textFieldDescrip.getText());
+        		
+        			plans.add(plan);
 					JsonManager.writeJsonBusinessStatistics(routeStatsJson, statsManager);
-					JsonManager.writeJsonArrayListUser(routeUserJson, users);
 					JsonManager.writeJsonArrayListPlan(routePlanJson, plans);
 					
-					message = "Se ha registrado exitosamente al usuario " + user.getName();
+					message = "Se ha registrado exitosamente el plan  " + plan.getPlan();
 					labelMessages.setText(message);
 			
-		    		planString = "";
-		    		payment = "";
 		    		
 		    		textFieldName.setText("");
-		    		textFieldAge.setText("");
-		    		textFieldId.setText("");
-		    		
-		    		comboBoxGender.setSelectedItem("");
-		    		comboBoxPlan.setSelectedItem("");
-		    		comboBoxPayment.setSelectedItem("");
+		    		textFieldValue.setText("");
+		    		textFieldDays.setText("");
+		    		textFieldMonths.setText("");
+		    		textFieldYears.setText("");
+		    		textFieldDescrip.setText("");
 		    		
 		    		
         		}

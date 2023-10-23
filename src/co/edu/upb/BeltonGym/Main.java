@@ -35,8 +35,10 @@ public class Main {
 
     }// MAIN
 
-            
-	public static List<User> listReturnUserInactiveBasicData(List<User> users) {
+           
+    
+    
+	public static List<User> listReturnUserInactive(List<User> users) {
 		List<User> oldUsers = new ArrayList<>();
 		for (int ii = 0; ii < users.size(); ii++) {
 			if (users.get(ii).isStatusPlan() == false) {
@@ -45,9 +47,19 @@ public class Main {
 		}
 		return oldUsers;
 	}
+	public static List<User> listReturnUserActive(List<User> users) {
+		List<User> activeUsers = new ArrayList<>();
+		for (int ii = 0; ii < users.size(); ii++) {
+			if (users.get(ii).isStatusPlan() == true) {
+				activeUsers.add(users.get(ii));
+				}
+		}
+		return activeUsers;
+	}
+	
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
 		Scanner in = new Scanner(System.in);
-		List<User> oldUsers = listReturnUserInactiveBasicData(users);
+		List<User> oldUsers = listReturnUserInactive(users);
 		int answer;
 
 		int indexUser;
@@ -102,6 +114,15 @@ public class Main {
 			
 			
 	}//updateSubs()
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
 		
 		if(user.getDueDatePlan().compareTo(LocalDate.now()) < 0) {
@@ -114,6 +135,30 @@ public class Main {
 			notifyUserDue(users.get(ii));
 		}
 	}//NotifyUserDue
+	
+	public static String stringPlanBasicData(List<Plan> plans) {
+		String planData = "";
+		int nmr;
+		for(int ii = 0; ii < plans.size(); ii++) {
+			nmr = ii + 1;
+			planData +=  nmr + ".      " + plans.get(ii).getPlan() +  "      	"  + plans.get(ii).getValue() + "\n";
+		}
+		
+		return planData;
+	}
+	public static String stringPlanData(List<Plan> plans, int ii) {
+		Plan plan = plans.get(ii);
+		String planData = "";
+		planData += "Plan #" + (ii + 1) + "\n";
+		planData += "Nombre: " + plan.getPlan() +"\n";
+		planData += "Descripción: " + plan.getDescription() +"\n";
+		planData += "Valor: " + plan.getValue() + "\n";
+		planData += "Duración: " + plan.getDurationYear() + " años con "
+                + plan.getDurationMonth() + " meses y "
+                + plan.getDurationDay() + " días" + "\n"
+				+ "Total de veces adquirido: " + plan.getTotalTimesAdquired() + "\n";	
+		return planData;
+	}
 	 public static String stringUsersBasicData(List<User> users) {
 		 String usersBasicData = "";
 		 int nmr = 0;
@@ -121,6 +166,28 @@ public class Main {
 		 for(int ii = 0; ii < users.size(); ii++) {
 				nmr = ii + 1;
 				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() +"\n";
+			}
+		 
+		 return usersBasicData;
+	 }
+	 public static String stringUsersBasicDataWithDue(List<User> users) {
+		 String usersBasicData = "";
+		 int nmr = 0;
+		 
+		 for(int ii = 0; ii < users.size(); ii++) {
+				nmr = ii + 1;
+				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() + "      " + users.get(ii).getDueDatePlan() +"\n";
+			}
+		 
+		 return usersBasicData;
+	 }
+	 public static String stringUsersBasicDataWithBanStatus(List<User> users) {
+		 String usersBasicData = "";
+		 int nmr = 0;
+		 
+		 for(int ii = 0; ii < users.size(); ii++) {
+				nmr = ii + 1;
+				usersBasicData += nmr + ".      " + users.get(ii).getName() + "      " + users.get(ii).getId() + "      " + users.get(ii).bannedAsString() +"\n";
 			}
 		 
 		 return usersBasicData;
@@ -137,6 +204,7 @@ public class Main {
 			stringReturn += "Estado del plan: " + users.get(index).statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + users.get(index).getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + users.get(index).getDueDatePlan()+"\n";
+			stringReturn += "Estado de baneo: " + users.get(index).bannedAsString()+"\n";
 			stringReturn += "-----Historial de Usuario-----" + "\n";
 			stringReturn += users.get(index).getHistory()+"\n";
 			
@@ -153,6 +221,7 @@ public class Main {
 			stringReturn += "Estado del plan: " + user.statusPlanAsString()+"\n";
 			stringReturn += "Fecha de ultimo pago: " + user.getDateLastPayment()+"\n";
 			stringReturn += "Fecha de vencimiento del plan: " + user.getDueDatePlan()+"\n";
+			stringReturn += "Estado de baneo: " + user.bannedAsString()+"\n";
 			stringReturn += "-----Historial de Usuario-----" + "\n";
 			stringReturn += user.getHistory()+"\n";
 			
