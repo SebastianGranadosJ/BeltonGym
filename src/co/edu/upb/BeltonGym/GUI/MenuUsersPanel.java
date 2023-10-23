@@ -26,12 +26,17 @@ import java.awt.Button;
 import java.awt.Panel;
 
 public class MenuUsersPanel extends JFrame {
+	User user = new User();
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private String routeUserJson = "Users.json";
 	private List <User> users =JsonManager.readJsonArrayListUser(routeUserJson);
+
+	private void updateUserStatus() {
+		user.updatePlanStatus(users); // Actualiza el estado del plan de los usuarios
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -184,6 +189,7 @@ public class MenuUsersPanel extends JFrame {
 	                // Obtener el texto ingresado por el usuario
 	                String input = textField.getText();
 	                int inputInt = Integer.parseInt(input);
+					updateUserStatus();// Llama a la actualización del estado del plan
 	                textPaneInfo.setText(Main.stringReturnUserData(users, inputInt));
 	               
 	            }

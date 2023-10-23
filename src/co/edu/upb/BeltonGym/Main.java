@@ -19,7 +19,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-    	
+    	User user = new User();
         String routeUserJson = "Users.json";
         String routePlanJson = "Plans.json";
         String routeStatsJson = "BusinessStatistics.json";
@@ -27,12 +27,13 @@ public class Main {
         List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
         List<Plan> plans = JsonManager.readJsonArrayListPlan(routePlanJson);
         BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
-
+        user.updatePlanStatus(users);
 		MainPanel mainPanel = new MainPanel();
 		mainPanel.setVisible(true);
-           
-            
-        }// MAIN
+
+
+
+    }// MAIN
 
             
 	public static List<User> listReturnUserInactiveBasicData(List<User> users) {
@@ -425,6 +426,7 @@ public class Main {
         System.out.println("Selección de usuario no válida.");
     }
 }
+
 }
    
 
