@@ -1,4 +1,8 @@
 package co.edu.upb.BeltonGym;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.List;
 
@@ -14,12 +18,17 @@ public class BusinessStatistics {
 	private int timesCashPayment = 0;// Total times that someone pay with Cash Payment
 	private int timesBankTransfer = 0;// Total times that someone pay with Bank Transfer
 	
+	private MonthStats currentMonth;
 	
+	List<MonthStats>historyMonths = new ArrayList<>();
 	
 	public BusinessStatistics() {
 	
 	} 
 	//----------------Functions--------------------
+	public void addCurrentMont() {
+		historyMonths.add(currentMonth);
+	}
 	public void incrementTotalUsers() {
         totalSubs++;
 	}
@@ -88,40 +97,69 @@ public class BusinessStatistics {
 				System.out.println("El plan " + plans.get(ii).getPlan() + " ha generado: " + gain+ " $"); 
 			}
 		}//profitPlans
-	 
+	 public String monthsBasicData (List<MonthStats>historyMonths) {
+		 String monthReturn = "";
+		 int cnt;
+		 cnt = historyMonths.size() - 1;
+		 int index;
+		 
+		 for (int ii = 0; ii < cnt; ii++) {
+			 index = ii + 1;
+			 monthReturn += index + ". " + historyMonths.get(cnt).nameMonth();
+			 cnt--;
+		 }
+		 return monthReturn;
+	 }
+	 public void haveMonthChange() {
+		 if (currentMonth.getMonth() != LocalDate.now().getMonth()) {
+			 MonthStats currentMonth = new MonthStats(); 
+			 historyMonths.add(currentMonth);
+			 
+		 }
+		 
+	 }
 	//---------------------Plus Amount----------------------------------
 	public void plusTotalSubs(int amt) {
-		totalSubs += amt;
-	}
-	
+			totalSubs += amt;
+			currentMonth.plusMonthlySubs(amt);
+		}
+		
 	public void plusTotalProfits(double amt) {
-		totalProfits += amt;
-	}
-	
+			totalProfits += amt;
+			currentMonth.plusMonthlyProfits(amt);
+		}
+		
 	public void plusProfitCardPayment(double amt) {
-		profitCardPayment += amt;
-	}
-	
+			profitCardPayment += amt;
+			currentMonth.plusProfitCardPayment(amt);
+		}
+		
 	public void plusProfitCashPayment(double amt) {
-		profitCashPayment += amt;
-	}
-	
+			profitCashPayment += amt;
+			currentMonth.plusProfitCashPayment(amt);
+		}
+		
 	public void plusProfitBankTransfer(double amt) {
-		profitBankTransfer += amt;
-	}
-	
-	
+			profitBankTransfer += amt;
+			currentMonth.plusProfitBankTransfer(amt);
+		}
+		
+		
 	public void plusTimesCardPayment(int amt) {
-		timesCardPayment += amt;
-	}
-	
+			timesCardPayment += amt;
+			currentMonth.plusTimesCardPayment(amt);
+		}
+		
 	public void plusTimesCashPayment(int amt) {
-		timesCashPayment += amt;
-	}
-	
+			timesCashPayment += amt;
+			currentMonth.plusTimesCashPayment(amt);
+		}
+		
 	public void plusTimesBankTransfer(int amt) {
-		timesBankTransfer += amt;
-	}
+			timesBankTransfer += amt;
+			currentMonth.plusTimesBankTransfer(amt);
+		}
+
 
 	
 	//------------------------Getters and Setters-----------------------------
