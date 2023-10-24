@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.BoxLayout;
@@ -128,9 +129,59 @@ public class MainPanel extends JFrame {
 		PanelNotificaciones.add(lblNotificaciones);
 
 		JTextArea txtNotificaciones = new JTextArea();
-		txtNotificaciones.setEditable(false); // Para que no se pueda editar el texto
+		txtNotificaciones.setEditable(false);
 		PanelNotificaciones.add(txtNotificaciones);
+		
+		addNotification(txtNotificaciones, "Notificación Ejemplo 1");
+        addNotification(txtNotificaciones, "Notificación Ejemplo 2");
+        addNotification(txtNotificaciones, "Notificación Ejemplo 3");
 
-	}
+        // Boton eliminar Notificaciones
+        JButton clearButton = new JButton("Borrar Todas");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearNotifications(txtNotificaciones);
+            }
+        });
+        PanelNotificaciones.add(clearButton);
+    }
+
+    // Notificacion que se pueda borrar 
+    private void addNotification(JTextArea textArea, String notificationText) {
+        JPanel notificationPanel = new JPanel();
+        notificationPanel.setLayout(new BorderLayout());
+
+        JLabel notificationLabel = new JLabel(notificationText);
+        notificationPanel.add(notificationLabel, BorderLayout.CENTER);
+
+        JButton deleteButton = new JButton("X");
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText(textArea.getText().replace(notificationText + "\n", ""));
+            }
+        });
+        notificationPanel.add(deleteButton, BorderLayout.EAST);
+
+        textArea.append(notificationText + "\n");
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+
+        textArea.add(notificationPanel);
+    }
+
+    // Borrar Notificaciones
+    private void clearNotifications(JTextArea textArea) {
+        textArea.setText("");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MainPanel mainPanel = new MainPanel();
+                mainPanel.setVisible(true);
+            }
+        });
+    }
 
 }
