@@ -32,6 +32,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 
 public class BusinessManagementPanel extends JFrame {
 
@@ -92,6 +93,10 @@ public class BusinessManagementPanel extends JFrame {
 		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("E:\\Abraham\\Descargas\\WhatsApp Image 2023-10-24 at 12.28.14 PM.jpeg"));
+		panel_1.add(lblNewLabel_1);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));

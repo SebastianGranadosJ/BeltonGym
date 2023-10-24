@@ -30,6 +30,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import java.awt.FlowLayout;
 import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
 
 public class UserManagementPanel extends JFrame {
 
@@ -102,6 +103,10 @@ public class UserManagementPanel extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("E:\\Abraham\\Descargas\\WhatsApp Image 2023-10-24 at 12.28.14 PM.jpeg"));
+		panel_2.add(lblNewLabel_1);
 		
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3);

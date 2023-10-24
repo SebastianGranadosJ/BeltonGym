@@ -65,11 +65,10 @@ public class MainPanel extends JFrame {
 		JPanel panelCenter = new JPanel();
 		panelCenter.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panelFunctions.add(panelCenter);
-		panelCenter.setLayout(null);
+		panelCenter.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("E:\\Abraham\\Descargas\\descarga (1).jpg"));
-		lblNewLabel_1.setBounds(0, 0, 205, 394);
+		lblNewLabel_1.setIcon(new ImageIcon("E:\\Abraham\\Descargas\\WhatsApp Image 2023-10-24 at 12.28.14 PM.jpeg"));
 		panelCenter.add(lblNewLabel_1);
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
