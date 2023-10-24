@@ -7,6 +7,9 @@ import  co.edu.upb.BeltonGym.GUI.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Scanner;
+
+import javax.swing.JTextArea;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -46,61 +49,57 @@ public class Main {
 		return oldUsers;
 	}
 	public static void updateSubs(List<User> users, List<Plan> plans, String routeUser, BusinessStatistics stats, String routeStats, String routePlan) {
-		Scanner in = new Scanner(System.in);
-		List<User> oldUsers = listReturnUserInactiveBasicData(users);
-		int answer;
+	    Scanner in = new Scanner(System.in);
+	    List<User> oldUsers = listReturnUserInactiveBasicData(users);
+	    int answer;
 
-		int indexUser;
-		Plan selectedPlan;
-			System.out.println("Usuario que su plan vencido: ");
-			System.out.println(stringUsersBasicData(oldUsers));
-			System.out.println("Ingrese el numero del usuario al que desea Renovar la suscripción: ");
-			indexUser = in.nextInt() - 1;
-			in.nextLine();
-			
-			System.out.println("Desea renovar la suscripccion de:  " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId());
-			System.out.println("1. Si 2.No" );
-			answer = in.nextInt();
-			in.nextLine();
-			
-			
-			
-			if(answer == 1) {
-				
-				selectedPlan = selectPlan(plans);
-				registerPayment(selectedPlan, stats, routeStats);
-				
-				oldUsers.get(indexUser).setCurrentPlan(selectedPlan);
-				selectedPlan.incrementTotalTimesAdquired();
-				
-				oldUsers.get(indexUser).setStatusPlan(true);
-				oldUsers.get(indexUser).setDateLastPayment(LocalDate.now());
-				oldUsers.get(indexUser).calDueDatePlan();
-				oldUsers.get(indexUser).addToHistory("Ha renovado su suscripción.");
-				stats.plusTotalSubs(1);
-				stats.plusTotalProfits(selectedPlan.getValue());
-				JsonManager.writeJsonBusinessStatistics(routeStats, stats);
-				
-				
-				System.out.println("Suscripccion Renovada" );
-				System.out.println();
-				
-				System.out.println("Cliente " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId() + " renovado: ");
-				System.out.println();
-				
-				System.out.println("Nombre: " + oldUsers.get(indexUser).getName());
-				System.out.println("Edad: " + oldUsers.get(indexUser).getAge());
-				System.out.println("Genero: " + oldUsers.get(indexUser).getGender());
-				System.out.println("Id: " + oldUsers.get(indexUser).getId());
-				System.out.println("Plan actual: " + oldUsers.get(indexUser).getCurrentPlan().getPlan());
-				System.out.println("Estado del plan: " + oldUsers.get(indexUser).statusPlanAsString());
-				System.out.println("Fecha de ultimo pago: " + oldUsers.get(indexUser).getDateLastPayment());
-				System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
-			}
-			JsonManager.writeJsonArrayListUser(routeUser, users);
-			JsonManager.writeJsonArrayListPlan(routePlan, plans);
-			
-			
+	    int indexUser;
+	    Plan selectedPlan;
+	    System.out.println("Usuario cuyo plan ha vencido: ");
+	    System.out.println(stringUsersBasicData(oldUsers));
+	    System.out.println("Ingrese el número del usuario al que desea renovar la suscripción: ");
+	    indexUser = in.nextInt() - 1;
+	    in.nextLine();
+
+	    System.out.println("¿Desea renovar la suscripción de: " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId() + "?");
+	    System.out.println("1. Sí 2. No");
+	    answer = in.nextInt();
+	    in.nextLine();
+
+	    if (answer == 1) {
+	        selectedPlan = selectPlan(plans);
+	        registerPayment(selectedPlan, stats, routeStats);
+
+	        oldUsers.get(indexUser).setCurrentPlan(selectedPlan);
+	        selectedPlan.incrementTotalTimesAdquired();
+
+	        oldUsers.get(indexUser).setStatusPlan(true);
+	        oldUsers.get(indexUser).setDateLastPayment(LocalDate.now());
+	        oldUsers.get(indexUser).calDueDatePlan();
+	        oldUsers.get(indexUser).addToHistory("Ha renovado su suscripción.");
+	        stats.plusTotalSubs(1);
+	        stats.plusTotalProfits(selectedPlan.getValue());
+	        JsonManager.writeJsonBusinessStatistics(routeStats, stats);
+
+	        // Agregar notificación de renovación de suscripción
+	        oldUsers.get(indexUser).addNotificacion("Ha renovado su suscripción.");
+
+	        System.out.println("Suscripción renovada");
+	        System.out.println();
+	        System.out.println("Cliente " + oldUsers.get(indexUser).getName() + " " + oldUsers.get(indexUser).getId() + " renovado:");
+	        System.out.println();
+	        System.out.println("Nombre: " + oldUsers.get(indexUser).getName());
+	        System.out.println("Edad: " + oldUsers.get(indexUser).getAge());
+	        System.out.println("Género: " + oldUsers.get(indexUser).getGender());
+	        System.out.println("ID: " + oldUsers.get(indexUser).getId());
+	        System.out.println("Plan actual: " + oldUsers.get(indexUser).getCurrentPlan().getPlan());
+	        System.out.println("Estado del plan: " + oldUsers.get(indexUser).statusPlanAsString());
+	        System.out.println("Fecha de último pago: " + oldUsers.get(indexUser).getDateLastPayment());
+	        System.out.println("Fecha de vencimiento del plan: " + oldUsers.get(indexUser).getDueDatePlan());
+	    }
+	    JsonManager.writeJsonArrayListUser(routeUser, users);
+	    JsonManager.writeJsonArrayListPlan(routePlan, plans);
+	    
 	}//updateSubs()
 	public static void notifyUserDue(User user) { //This function checks if clients plan have expired
 		
@@ -439,6 +438,21 @@ public class Main {
             }
         }
     }
+    
+    private List<String> notificaciones = new ArrayList<>();
+
+    public void addNotificacion(String notificacion) {
+        notificaciones.add(notificacion);
+    }
+
+    public void actualizarNotificaciones(JTextArea txtNotificaciones) {
+        StringBuilder notifText = new StringBuilder();
+        for (String notificacion : notificaciones) {
+            notifText.append(notificacion).append("\n");
+        }
+        txtNotificaciones.setText(notifText.toString());
+    }
+
 
 }
    

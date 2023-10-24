@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
@@ -118,9 +119,18 @@ public class MainPanel extends JFrame {
 		JButton btnMenuStatistics = new JButton("Estadísticas");
 		panelCenter.add(btnMenuStatistics);
 		
-		JPanel panelRight = new JPanel();
-		panelRight.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelFunctions.add(panelRight);
+		JPanel PanelNotificaciones = new JPanel();
+		PanelNotificaciones.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelFunctions.add(PanelNotificaciones);
+		
+		JLabel lblNotificaciones = new JLabel("Notificaciones:");
+		lblNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 14));
+		PanelNotificaciones.add(lblNotificaciones);
+
+		JTextArea txtNotificaciones = new JTextArea();
+		txtNotificaciones.setEditable(false); // Para que no se pueda editar el texto
+		PanelNotificaciones.add(txtNotificaciones);
+
 	}
 
 }

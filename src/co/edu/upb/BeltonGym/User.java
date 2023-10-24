@@ -1,4 +1,5 @@
 package co.edu.upb.BeltonGym;
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -14,6 +15,9 @@ public class User {
     private LocalDate dueDatePlan;
     private boolean banned = false;
     private String history = "";
+    
+    private List<String> notificaciones = new ArrayList<>();
+
 
     public User() {
 
@@ -42,6 +46,15 @@ public class User {
         LocalDate currentDate = LocalDate.now();
         String entry = currentDate.toString() + " - " + this.name + " (" + this.id + "): " + action;
         this.history += entry + "\n";
+    }
+    
+    public void addNotificacion(String string) {
+        if (dueDatePlan != null && LocalDate.now().isAfter(dueDatePlan)) {
+            // La membresía ha vencido, crea una notificación
+            LocalDate currentDate = LocalDate.now();
+            String mensaje = "La membresía de " + this.name + " ha vencido el " + currentDate;
+            notificaciones.add(mensaje);
+        }
     }
 
     //------------------Getters and Setters------------------//
