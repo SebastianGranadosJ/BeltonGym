@@ -1,1 +1,51 @@
-{"totalSubs":53,"totalProfits":4117000.0,"profitCardPayment":1739000.0,"profitCashPayment":1131000.0,"profitBankTransfer":68000.0,"timesCardPayment":12,"timesCashPayment":21,"timesBankTransfer":2}
+{
+    "totalSubs": 0,
+    "totalProfits": 0.0,
+    "profitCardPayment": 0.0,
+    "profitCashPayment": 0.0,
+    "profitBankTransfer": 0.0,
+    "timesCardPayment": 0,
+    "timesCashPayment": 0,
+    "timesBankTransfer": 0,
+    "currentMonth": {
+        "month": "OCTOBER",
+        "year": 2023,
+        "monthlySubs": 0,
+        "monthlyProfits": 0.0,
+        "profitCardPayment": 0.0,
+        "profitCashPayment": 0.0,
+        "profitBankTransfer": 0.0,
+        "timesCardPayment": 0,
+        "timesCashPayment": 0,
+        "timesBankTransfer": 0,
+        "monthlyySubs": 0
+    },
+    "historyMonths": [
+        {
+            "month": "OCTOBER",
+            "year": 2023,
+            "monthlySubs": 0,
+            "monthlyProfits": 0.0,
+            "profitCardPayment": 0.0,
+            "profitCashPayment": 0.0,
+            "profitBankTransfer": 0.0,
+            "timesCardPayment": 0,
+            "timesCashPayment": 0,
+            "timesBankTransfer": 0,
+            "monthlyySubs": 0
+        },
+        {
+            "month": "SEPTEMBER",
+            "year": 2023,
+            "monthlySubs": 0,
+            "monthlyProfits": 0.0,
+            "profitCardPayment": 0.0,
+            "profitCashPayment": 0.0,
+            "profitBankTransfer": 0.0,
+            "timesCardPayment": 0,
+            "timesCashPayment": 0,
+            "timesBankTransfer": 0,
+            "monthlyySubs": 0
+        }
+    ]
+}

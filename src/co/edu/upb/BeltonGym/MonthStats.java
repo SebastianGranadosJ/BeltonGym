@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 public class MonthStats {
+	
 	private Month month = LocalDate.now().getMonth();
 	private int year = LocalDate.now().getYear();
 	private int monthlySubs = 0;
@@ -74,14 +75,15 @@ public class MonthStats {
 		 String dataReturn = "";
 		 
 		 dataReturn += "Mes: " + month + "\n";
-		 dataReturn += "Subscripciones Mensuales: " + monthlySubs + "\n";
 		 dataReturn += "Ganancias Mensuales: " + monthlyProfits + "\n";
+		 dataReturn += "Subscripciones Mensuales: " + monthlySubs + "\n\n";
 		 dataReturn += "Ganancias de pago con tarjeta: " + profitCardPayment + "\n";
 		 dataReturn += "Ganancias de pago con efectivo: " + profitCashPayment + "\n";
-		 dataReturn += "Ganancias de trasnferencias bancarias: " + profitBankTransfer + "\n";
+		 dataReturn += "Ganancias de trasnferencias bancarias: " + profitBankTransfer + "\n\n";
 		 dataReturn += "Veces pagadas con tarjeta: " + timesCardPayment + "\n";
 		 dataReturn += "Veces pagadas con efectivo: " +timesCashPayment + "\n";
 		 dataReturn += "Veces pagadas con trasnferencias bancarias: " + timesBankTransfer + "\n";
+		 dataReturn += "----------------------------------------------------------------";
 		 
 		 return dataReturn;
 	 }
@@ -185,6 +187,26 @@ public class MonthStats {
 
 	public void setMonthlyProfits(double monthlyProfits) {
 		this.monthlyProfits = monthlyProfits;
+	}
+	@Override
+	public String toString() {
+		return "MonthStats [month=" + month + ", year=" + year + ", monthlySubs=" + monthlySubs + ", monthlyProfits="
+				+ monthlyProfits + ", profitCardPayment=" + profitCardPayment + ", profitCashPayment="
+				+ profitCashPayment + ", profitBankTransfer=" + profitBankTransfer + ", timesCardPayment="
+				+ timesCardPayment + ", timesCashPayment=" + timesCashPayment + ", timesBankTransfer="
+				+ timesBankTransfer + "]";
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public int getMonthlySubs() {
+		return monthlySubs;
+	}
+	public void setMonthlySubs(int monthlySubs) {
+		this.monthlySubs = monthlySubs;
 	}
 
 	

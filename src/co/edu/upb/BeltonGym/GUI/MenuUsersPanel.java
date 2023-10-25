@@ -35,7 +35,7 @@ public class MenuUsersPanel extends JFrame {
 	private List <User> users =JsonManager.readJsonArrayListUser(routeUserJson);
 
 	private void updateUserStatus() {
-		Main.updatePlanStatus(users); // Actualiza el estado del plan de los usuarios
+		Main.updatePlanStatus(users, routeUserJson); // Actualiza el estado del plan de los usuarios
 	}
 	/**
 	 * Launch the application.
@@ -114,11 +114,6 @@ public class MenuUsersPanel extends JFrame {
 		panelUsers.add(panelSelectUser, BorderLayout.SOUTH);
 		panelSelectUser.setLayout(new BorderLayout(0, 0));
 		
-		
-		
-		JLabel lblNewLabel_1 = new JLabel("Numero de Usuario:");
-		panelSelectUser.add(lblNewLabel_1, BorderLayout.WEST);
-		
 		JPanel panelTopData = new JPanel();
 		panelTopData.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		panelUsers.add(panelTopData, BorderLayout.NORTH);
@@ -184,6 +179,12 @@ public class MenuUsersPanel extends JFrame {
 		textField = new JTextField();
 		panelSelectUser.add(textField, BorderLayout.CENTER);
 		textField.setColumns(10);
+		
+		JPanel panel = new JPanel();
+		panelSelectUser.add(panel, BorderLayout.WEST);
+		
+		JLabel lblNewLabel_1 = new JLabel("Numero de Usuario:");
+		panel.add(lblNewLabel_1);
 		 textField.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                // Obtener el texto ingresado por el usuario

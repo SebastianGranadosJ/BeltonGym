@@ -18,25 +18,36 @@ public class BusinessStatistics {
 	private int timesCashPayment = 0;// Total times that someone pay with Cash Payment
 	private int timesBankTransfer = 0;// Total times that someone pay with Bank Transfer
 	
-	private MonthStats currentMonth;
+	private MonthStats currentMonth = new MonthStats();
 	
 	List<MonthStats>historyMonths = new ArrayList<>();
-	
+
 	public BusinessStatistics() {
 	
 	} 
 	//----------------Functions--------------------
+	public String menuDisplayMonthsData() {
+		String dataReturn = "";
+		for(int ii = 0; ii< historyMonths.size(); ii++) {
+			dataReturn += historyMonths.get(ii).monthDataAsString() + "\n";
+		}
+		return dataReturn;
+	}
 	public void addCurrentMont() {
 		historyMonths.add(currentMonth);
 	}
 	public void incrementTotalUsers() {
         totalSubs++;
 	}
-	public void displayPlanAdquisitionStatistics(List<Plan> plans) {	 
-        System.out.println("Plan / Cantidad de veces adquirido");
+	public String displayPlanAdquisitionStatistics(List<Plan> plans) {	 
+        String stringReturn = "Plan / Cantidad de veces adquirido / Ganancias\n";
         for (int ii = 0; ii < plans.size(); ii++) {
-        	System.out.println(plans.get(ii).getPlan() + ": " + plans.get(ii).getTotalTimesAdquired() + " veces");	
+        	double gain = 0;
+			int a = plans.get(ii).getTotalTimesAdquired();
+			gain = (a  * plans.get(ii).getValue());
+        	stringReturn += plans.get(ii).getPlan() + ":   " + plans.get(ii).getTotalTimesAdquired() + " veces   " + gain + "$\n" ;	
         }
+        return stringReturn;
     }
 	
 	 public static int activeSuscriptions(List<User> users) {
@@ -62,40 +73,42 @@ public class BusinessStatistics {
 	        
 	        return inactiveClients;
 	    }//InactiveSuscription()
-	 public void menuDisplayBusinessData(List<User> users, List<Plan> plans) {
+	 public String menuDisplayBusinessData(List<User> users, List<Plan> plans) {
 		 
-		 System.out.println("Visualizacion de estadisticas del negocio: ");
+		 String returnString = "";
 		 
-		 System.out.print("Las ganancias del negocio son: ");
-		 System.out.println(getTotalProfits());
+		 returnString += "----------Estadisticas Generales----------\n";
 		 
-		 System.out.print("El total de suscripccion adquiridas es: ");
-		 System.out.println(getTotalSubs());
+		 returnString += "Las ganancias del negocio son: " + getTotalProfits() + "\n";
+		
+		 returnString +="El total de suscripccion adquiridas es: " + getTotalSubs()  + "\n" ;
+		
+		 returnString += "Las suscripcciones activas son: " + activeSuscriptions(users) + "\n";
 		 
-		 System.out.print("Las suscripcciones activas son: ");
-		 System.out.println(activeSuscriptions(users));
+		 returnString += "Las suscripcciones inactivas son: " + inactiveSuscriptions(users) + "\n\n"; 
 		 
-		 System.out.print("Las suscripcciones inactivas son: ");
-		 System.out.println(inactiveSuscriptions(users));
+		 returnString += "Ganancias de pago con tarjeta: " + profitCardPayment + "\n";
+		 returnString += "Ganancias de pago con efectivo: " + profitCashPayment + "\n";
+		 returnString += "Ganancias de trasnferencias bancarias: " + profitBankTransfer + "\n\n";
+		 returnString += "Veces pagadas con tarjeta: " + timesCardPayment + "\n";
+		 returnString += "Veces pagadas con efectivo: " +timesCashPayment + "\n";
+		 returnString += "Veces pagadas con trasnferencias bancarias: " + timesBankTransfer + "\n\n";
 		 
-		 System.out.println("Cantidad de veces que los planes han sido adquridos: ");
-		 System.out.println();
-		 displayPlanAdquisitionStatistics( plans);
+		 returnString += displayPlanAdquisitionStatistics(plans) + "\n";
 		 
-		 System.out.println("Ganancias generadas por cada uno de los planes: ");
-		 System.out.println();
-		 profitPlans(plans);
-		 
+		 return returnString;
 		 
 	 }//MenuDisplayBusinessData()
 	 
-	 public void profitPlans(List<Plan> plans) {
+	 public String profitPlans(List<Plan> plans) {
+		 String returnString = "";
 			for (int ii = 0; ii < plans.size(); ii++) {
 				double gain = 0;
 				int a = plans.get(ii).getTotalTimesAdquired();
 				gain = (a  * plans.get(ii).getValue());
-				System.out.println("El plan " + plans.get(ii).getPlan() + " ha generado: " + gain+ " $"); 
+				returnString += "El plan " + plans.get(ii).getPlan() + ":   " + gain+ " $\n"; 
 			}
+			return returnString;
 		}//profitPlans
 	 public String monthsBasicData (List<MonthStats>historyMonths) {
 		 String monthReturn = "";
@@ -225,5 +238,18 @@ public class BusinessStatistics {
 
 	public void setTimesBankTransfer(int timesBankTransfer) {
 		this.timesBankTransfer = timesBankTransfer;
+	}
+	
+	public MonthStats getCurrentMonth() {
+		return currentMonth;
+	}
+	public void setCurrentMonth(MonthStats currentMonth) {
+		this.currentMonth = currentMonth;
+	}
+	public List<MonthStats> getHistoryMonths() {
+		return historyMonths;
+	}
+	public void setHistoryMonths(List<MonthStats> historyMonths) {
+		this.historyMonths = historyMonths;
 	}
 }

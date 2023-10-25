@@ -19,7 +19,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-    	User user = new User();
+    	
         String routeUserJson = "Users.json";
         String routePlanJson = "Plans.json";
         String routeStatsJson = "BusinessStatistics.json";
@@ -27,11 +27,16 @@ public class Main {
         List<User> users = JsonManager.readJsonArrayListUser(routeUserJson);
         List<Plan> plans = JsonManager.readJsonArrayListPlan(routePlanJson);
         BusinessStatistics statsManager = JsonManager.readJsonBusinessStatistics(routeStatsJson);
-        updatePlanStatus(users);
+        
+        statsManager.haveMonthChange();
+        updatePlanStatus(users, routeUserJson);
+        
 		MainPanel mainPanel = new MainPanel();
 		mainPanel.setVisible(true);
-
-
+    
+     
+   
+    
 
     }// MAIN
 
@@ -495,7 +500,7 @@ public class Main {
         System.out.println("Selección de usuario no válida.");
     }
 }
-    public static void updatePlanStatus(List<User> users) {
+    public static void updatePlanStatus(List<User> users, String route) {
         LocalDate currentDate = LocalDate.now();
 
         for (User user : users) {
@@ -507,6 +512,7 @@ public class Main {
                 }
             }
         }
+        JsonManager.writeJsonArrayListUser(route, users);
     }
 
 }

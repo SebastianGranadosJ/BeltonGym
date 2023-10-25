@@ -146,6 +146,13 @@ public class MainPanel extends JFrame {
 		panelCenter.add(btnAddPlan);
 		
 		JButton btnMenuStatistics = new JButton("Estadísticas");
+		btnMenuStatistics.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StatsPanel statsPanel = new StatsPanel();
+				statsPanel .setVisible(true);
+				dispose();
+			}
+		});
 		panelCenter.add(btnMenuStatistics);
 		
 		JPanel panelRight = new JPanel();
