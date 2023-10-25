@@ -90,8 +90,8 @@ public class BanUnbanPanel extends JFrame {
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainPanel mainPanel = new MainPanel();
-				mainPanel.setVisible(true);
+				UserManagementPanel userManagementPanel = new UserManagementPanel();
+				userManagementPanel.setVisible(true);
 				dispose();
 			}
 		});

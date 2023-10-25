@@ -80,8 +80,8 @@ public class MenuPlansPanel extends JFrame {
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainPanel mainPanel = new MainPanel();
-				mainPanel.setVisible(true);
+				BusinessManagementPanel businessManagementPanel = new BusinessManagementPanel();
+				businessManagementPanel.setVisible(true);
 				dispose();
 			}
 		});
